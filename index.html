@@ -1,119 +1,225 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM HACKED!</title>
+    <title>⚡ SYSTEM COMPROMISED ⚡</title>
     <style>
-        body {
-            background-color: #000;
-            color: #0f0;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
-            font-size: 16px;
-            line-height: 1.5;
-            overflow-x: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Courier New', monospace; }
+        
+        /* Matrix Canvas */
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+        /* Birthday Text */
+        .birthday-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ff00;
+            font-size: 4rem;
+            font-weight: bold;
+            z-index: 2;
+            text-shadow: 0 0 20px #00ff00;
+            letter-spacing: 5px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInGlitch 2s ease-in forwards 1.5s;
         }
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            color: rgba(0, 255, 0, 0.15);
-            font-size: 10px;
-            z-index: -1;
-            white-space: pre-wrap;
+
+        @keyframes fadeInGlitch {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: blur(10px); }
+            50% { opacity: 1; filter: blur(0); text-shadow: -2px 0 red, 2px 0 blue; }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
-        .terminal {
-            max-width: 600px;
-            margin: 0 auto;
-            border: 1px solid #0f0;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            background: rgba(0, 0, 0, 0.9);
+
+        /* Stage Transition */
+        #stage1 { width: 100%; height: 100%; position: absolute; transition: opacity 1s ease; }
+        #stage2 { 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            background: #111; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            opacity: 0; 
+            pointer-events: none;
+            transition: opacity 1s ease;
+            z-index: 5;
         }
-        .blink {
-            animation: blinker 1s linear infinite;
+
+        /* --- Anime Animation Scene --- */
+        .scene { position: relative; width: 600px; height: 400px; background: #1a1a2e; border-radius: 15px; overflow: hidden; border: 3px solid #00ff00; }
+        
+        /* Table and Cake */
+        .table { position: absolute; bottom: 0; width: 100%; height: 100px; background: #4e3629; }
+        .cake { 
+            position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 60px; background: #ff7494; border-radius: 10px 10px 0 0; 
+            box-shadow: inset 0 15px 0 #fff;
+            transition: all 0.2s ease;
         }
-        @keyframes blinker {
-            50% { opacity: 0; }
+        .cake::before { /* Candle */
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 15px; background: #ffeb3b;
         }
-        .highlight {
-            color: #fff;
-            text-shadow: 0 0 5px #fff, 0 0 10px #0f0;
+        .cake.smashed { height: 25px; background: #e05373; border-radius: 50% 50% 0 0; width: 160px; }
+        .cake.smashed::before { display: none; }
+
+        /* Anime Girl */
+        .girl {
+            position: absolute; bottom: 100px; left: 60%;
+            width: 70px; height: 130px; background: #ffb7b2; border-radius: 30px 30px 0 0;
+            transition: transform 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            transform-origin: bottom left;
+        }
+        .girl::after { /* Hair */
+            content: ''; position: absolute; top: -5px; left: -5px; width: 80px; height: 50px; 
+            background: #ff7494; border-radius: 20px 20px 0 0;
+        }
+        .girl .face { position: absolute; top: 25px; left: 15px; width: 40px; height: 30px; background: #ffe5d9; border-radius: 50%; }
+        .girl .face::before { content: 'O_O'; position: absolute; top: 5px; left: 5px; font-weight: bold; font-size: 12px; color: #000; }
+
+        /* Girl Smashed State */
+        .girl.is-smashed {
+            transform: rotate(-85deg) translate(-40px, 60px);
+        }
+        .girl.is-smashed .face::before { content: 'X_X'; color: #ff0000; }
+
+        /* Anime Boy */
+        .boy {
+            position: absolute; bottom: 100px; left: 15%;
+            width: 70px; height: 140px; background: #b5e2ff; border-radius: 30px 30px 0 0;
+            animation: walkIn 2s forwards;
+        }
+        .boy::after { /* Hair */
+            content: ''; position: absolute; top: -5px; left: -5px; width: 80px; height: 45px; 
+            background: #4a4e69; border-radius: 20px 20px 0 0;
+        }
+        .boy .hands {
+            position: absolute; top: 60px; right: -15px; width: 40px; height: 20px; 
+            background: #b5e2ff; border-radius: 10px; transform-origin: left center;
+        }
+
+        @keyframes walkIn {
+            0% { left: -10%; }
+            100% { left: 25%; }
+        }
+
+        /* Boy Pushing Action */
+        .boy.push .hands {
+            animation: pushAction 0.5s forwards;
+        }
+        @keyframes pushAction {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg) scaleX(1.4); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Text overlay in animation */
+        .funny-text {
+            position: absolute; top: 30px; width: 100%; text-align: center;
+            color: #fff; font-size: 1.5rem; font-weight: bold; display: none;
         }
     </style>
 </head>
 <body>
 
-<div class="matrix-bg" id="matrix"></div>
+    <div id="stage1">
+        <canvas id="matrix"></canvas>
+        <div class="birthday-text">SYSTEM HACKED<br><span style="color: #fff;">HAPPY BIRTHDAY!</span></div>
+    </div>
 
-<div class="terminal">
-    <div id="output"></div>
-    <span class="blink">_</span>
-</div>
+    <div id="stage2">
+        <div class="scene">
+            <div class="funny-text" id="funnyText">CHOMPOK! CAKE KHA! 🎂😂</div>
+            <div class="boy" id="animeBoy"><div class="hands"></div></div>
+            <div class="girl" id="animeGirl"><div class="face"></div></div>
+            <div class="cake" id="birthdayCake"></div>
+            <div class="table"></div>
+        </div>
+    </div>
 
-<script>
-    // এখানে তোমার বন্ধুর নাম ও বয়স পরিবর্তন করো
-    const targetName = "Juhi🌚✨"; 
-    const targetAge = "16"; 
-    const senderName = "S.M.Shishir";
+    <script>
+        // --- Matrix Code Rain Script ---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
 
-    const lines = [
-        "[+] INITIALIZING CYBER_WISH_PROTOCOL v3.0...",
-        `[+] TARGET DETECTED: ${targetName}`,
-        `[+] TARGET AGE: ${targetAge}`,
-        "[+] BYPASSING SECURITY FIREWALL...... [SUCCESS]",
-        "[+] EXPLOITING SYSTEM CORE........... [SUCCESS]",
-        "[+] INJECTING CELEBRATION MALWARE.... [SUCCESS]",
-        "--------------------------------------------------",
-        "💥 [SYSTEM CRITICAL ALERT: BIRTHDAY DETECTED!] 💥",
-        "--------------------------------------------------",
-        "📥 DOWNLOADING WISHES...",
-        "██████████ 100% [DOWNLOAD COMPLETE]",
-        "",
-        "Executing core_wish.exe...",
-        "--------------------------------------------------",
-        `> শুভ জন্মদিন, ${targetName}! 🎂`,
-        "> জীবনে সব হ্যাক এবং মিশন সাকসেসফুল হোক!",
-        "> খুশি আর সাফল্য তোর লাইফে চিরকাল 'Root Access' পাক!",
-        "--------------------------------------------------",
-        "[✗] WARNING: System infected with countless blessings.",
-        `[+] HACKED BY: ${senderName} _`,
-        "[+] STATUS: SAFE TO CELEBRATE 🎉"
-    ];
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    let lineIndex = 0;
-    const outputDiv = document.getElementById('output');
+        // তোমার দেওয়া নাম্বার এবং কিছু কাস্টম ক্যারেক্টার
+        const matrixChars = "961029566067ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$@%".split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const dropY = Array(Math.floor(columns)).fill(1);
 
-    function typeLine() {
-        if (lineIndex < lines.length) {
-            let p = document.createElement('p');
-            if(lines[lineIndex].includes("💥") || lines[lineIndex].includes("শুভ জন্মদিন")) {
-                p.className = "highlight";
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; // Green text
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < dropY.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, dropY[i] * fontSize);
+
+                if (dropY[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    dropY[i] = 0;
+                }
+                dropY[i]++;
             }
-            p.textContent = lines[lineIndex];
-            outputDiv.appendChild(p);
-            lineIndex++;
-            window.scrollTo(0, document.body.scrollHeight);
-            setTimeout(typeLine, 600); // প্রতিটি লাইন আসার গতি (মিলিসেকেন্ডে)
         }
-    }
+        const matrixInterval = setInterval(drawMatrix, 35);
 
-    // ব্যাকগ্রাউন্ডে ম্যাট্রিক্স ইফেক্ট
-    function makeMatrix() {
-        let matrixText = "";
-        for (let i = 0; i < 500; i++) {
-            matrixText += Math.floor(Math.random() * 2);
-            if (i % 25 === 0) matrixText += "\n";
+        // --- Animation Timeline Controller ---
+        const stage1 = document.getElementById('stage1');
+        const stage2 = document.getElementById('stage2');
+        const boy = document.getElementById('animeBoy');
+        const girl = document.getElementById('animeGirl');
+        const cake = document.getElementById('birthdayCake');
+        const funnyText = document.getElementById('funnyText');
+
+        // ৫ সেকেন্ড পর হ্যাকিং স্ক্রিন থেকে অ্যানিমেশন স্ক্রিনে যাবে
+        setTimeout(() => {
+            clearInterval(matrixInterval);
+            stage1.style.opacity = '0';
+            
+            setTimeout(() => {
+                stage1.style.display = 'none';
+                stage2.style.opacity = '1';
+                stage2.style.pointerEvents = 'auto';
+                startAnimeAnimation();
+            }, 1000);
+
+        }, 6000);
+
+        // অ্যানিমে কার্টুন অ্যানিমেশন লজিক
+        function startAnimeAnimation() {
+            // ১. ছেলেটি হেঁটে মেয়ের কাছে আসবে (CSS walkIn অ্যানিমেশন ২ সেকেন্ড নেবে)
+            setTimeout(() => {
+                // ২. ছেলেটি ধাক্কা মারবে
+                boy.classList.add('push');
+                
+                setTimeout(() => {
+                    // ৩. মেয়েটি কেকের ওপর পড়বে এবং কেকটি ভেঙে যাবে
+                    girl.classList.add('is-smashed');
+                    cake.classList.add('smashed');
+                    
+                    // ৪. স্ক্রিনে মজার টেক্সট ভেসে উঠবে
+                    funnyText.style.display = 'block';
+                }, 300); // ধাক্কা মারার ঠিক পর মুহূর্তেই পতন
+
+            }, 2200); 
         }
-        document.getElementById('matrix').textContent = matrixText;
-    }
-    
-    setInterval(makeMatrix, 100);
-    setTimeout(typeLine, 1000);
-</script>
 
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
