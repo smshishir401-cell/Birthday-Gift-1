@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM HACKED!</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: rgba(0, 255, 0, 0.15);
+            font-size: 10px;
+            z-index: -1;
+            white-space: pre-wrap;
+        }
+        .terminal {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #0f0;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        .highlight {
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="matrix-bg" id="matrix"></div>
+
+<div class="terminal">
+    <div id="output"></div>
+    <span class="blink">_</span>
+</div>
+
+<script>
+    // এখানে তোমার বন্ধুর নাম ও বয়স পরিবর্তন করো
+    const targetName = "Juhi🌚✨"; 
+    const targetAge = "16"; 
+    const senderName = "S.M.Shishir";
+
+    const lines = [
+        "[+] INITIALIZING CYBER_WISH_PROTOCOL v3.0...",
+        `[+] TARGET DETECTED: ${targetName}`,
+        `[+] TARGET AGE: ${targetAge}`,
+        "[+] BYPASSING SECURITY FIREWALL...... [SUCCESS]",
+        "[+] EXPLOITING SYSTEM CORE........... [SUCCESS]",
+        "[+] INJECTING CELEBRATION MALWARE.... [SUCCESS]",
+        "--------------------------------------------------",
+        "💥 [SYSTEM CRITICAL ALERT: BIRTHDAY DETECTED!] 💥",
+        "--------------------------------------------------",
+        "📥 DOWNLOADING WISHES...",
+        "██████████ 100% [DOWNLOAD COMPLETE]",
+        "",
+        "Executing core_wish.exe...",
+        "--------------------------------------------------",
+        `> শুভ জন্মদিন, ${targetName}! 🎂`,
+        "> জীবনে সব হ্যাক এবং মিশন সাকসেসফুল হোক!",
+        "> খুশি আর সাফল্য তোর লাইফে চিরকাল 'Root Access' পাক!",
+        "--------------------------------------------------",
+        "[✗] WARNING: System infected with countless blessings.",
+        `[+] HACKED BY: ${senderName} _`,
+        "[+] STATUS: SAFE TO CELEBRATE 🎉"
+    ];
+
+    let lineIndex = 0;
+    const outputDiv = document.getElementById('output');
+
+    function typeLine() {
+        if (lineIndex < lines.length) {
+            let p = document.createElement('p');
+            if(lines[lineIndex].includes("💥") || lines[lineIndex].includes("শুভ জন্মদিন")) {
+                p.className = "highlight";
+            }
+            p.textContent = lines[lineIndex];
+            outputDiv.appendChild(p);
+            lineIndex++;
+            window.scrollTo(0, document.body.scrollHeight);
+            setTimeout(typeLine, 600); // প্রতিটি লাইন আসার গতি (মিলিসেকেন্ডে)
+        }
+    }
+
+    // ব্যাকগ্রাউন্ডে ম্যাট্রিক্স ইফেক্ট
+    function makeMatrix() {
+        let matrixText = "";
+        for (let i = 0; i < 500; i++) {
+            matrixText += Math.floor(Math.random() * 2);
+            if (i % 25 === 0) matrixText += "\n";
+        }
+        document.getElementById('matrix').textContent = matrixText;
+    }
+    
+    setInterval(makeMatrix, 100);
+    setTimeout(typeLine, 1000);
+</script>
+
+</body>
+</html>
