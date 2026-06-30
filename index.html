@@ -217,4 +217,255 @@
                         <path d="M35,35 L45,52 L52,38 L62,54 L72,36" stroke="#1e293b" stroke-width="4" stroke-linecap="round" fill="none"/>
                         <circle cx="55" cy="65" r="23" fill="#ffedd5"/>
                         <path d="M42,60 Q48,58 50,62" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-                        <path d="M62,60 Q68,58 70,62" stroke="#0f172a"
+                        <path d="M62,60 Q68,58 70,62" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+                        <circle cx="46" cy="64" r="2" fill="#0f172a"/>
+                        <circle cx="66" cy="64" r="2" fill="#0f172a"/>
+                        <path d="M50,76 Q55,79 60,76" stroke="#334155" stroke-width="2" fill="none"/>
+                        <path d="M30,88 L80,88 L85,190 L25,190 Z" fill="#1e1b4b"/>
+                        <path d="M30,88 L55,120 L80,88" fill="#312e81"/>
+                        <path d="M51,120 L51,190" stroke="#f1f5f9" stroke-width="1.5"/>
+                        <path d="M30,90 Q15,130 22,170" stroke="#1e1b4b" stroke-width="12" stroke-linecap="round" fill="none"/>
+                        <path id="boy-right-arm" d="M80,92 Q95,130 98,165" stroke="#1e1b4b" stroke-width="12" stroke-linecap="round" fill="none"/>
+                        <rect x="38" y="190" width="12" height="65" fill="#0f172a"/>
+                        <rect x="60" y="190" width="12" height="65" fill="#0f172a"/>
+                    </svg>
+                </div>
+
+                <div class="character sun-rong" id="sun-rong">
+                    <div id="p2-talk" class="speech-box">Let me blow the candle! *Fu* 💨</div>
+                    <svg viewBox="0 0 120 280" width="100%" height="100%">
+                        <path d="M20,55 Q55,8 90,55 L95,210 L15,210 Z" fill="#2e1065"/>
+                        <circle cx="55" cy="65" r="23" fill="#ffedd5"/>
+                        <ellipse cx="44" cy="62" rx="3.5" ry="5.5" fill="#1e1b4b"/>
+                        <ellipse cx="66" cy="62" rx="3.5" ry="5.5" fill="#1e1b4b"/>
+                        <ellipse cx="40" cy="71" rx="4" ry="2" fill="#fda4af" opacity="0.6"/>
+                        <ellipse cx="70" cy="71" rx="4" ry="2" fill="#fda4af" opacity="0.6"/>
+                        <circle cx="55" cy="74" r="3.5" fill="#ffedd5" stroke="#1e1b4b" stroke-width="2"/>
+                        <path d="M26,50 Q55,20 84,50 Q75,65 55,60 Q35,65 26,50" fill="#2e1065"/>
+                        <path d="M32,88 L78,88 L86,190 L24,190 Z" fill="#9d174d"/>
+                        <path d="M24,165 L86,165" stroke="#fce7f3" stroke-width="4"/>
+                        <path id="girl-left-arm" d="M34,92 Q18,130 16,165" stroke="#9d174d" stroke-width="11" stroke-linecap="round" fill="none"/>
+                        <path d="M76,90 Q90,130 84,170" stroke="#9d174d" stroke-width="11" stroke-linecap="round" fill="none"/>
+                        <rect x="40" y="190" width="10" height="65" fill="#ffedd5"/>
+                        <rect x="62" y="190" width="10" height="65" fill="#ffedd5"/>
+                    </svg>
+                </div>
+
+            </div> <div class="cake-space">
+                <div class="main-cake">
+                    <div class="frosting"></div>
+                    <div class="candle-stick"><div class="fire-flame" id="cake-flame"></div></div>
+                </div>
+                <div class="table-stand"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // --- 1. DIGITAL BLUE MATRIX BACKGROUND ---
+        const binarySet = "01010101010101010101";
+        const matrixChars = binarySet.split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function renderMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0052ff'; 
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        // --- 2. EXACTLY 300 PARTICLES DYNAMIC PIPELINE ---
+        let particles = [];
+        const totalParticles = 300;
+        let timelineIndex = 0; 
+        const sequenceTexts = ["Happy birthday", "To YOU", "JUHI", "HEART"];
+        let animationClock = 0;
+
+        class TextParticle {
+            constructor() {
+                this.randomizeSpawn();
+                this.targetX = canvas.width / 2;
+                this.targetY = canvas.height / 2;
+                this.color = '#ff66cc'; 
+                this.radius = Math.random() * 2.5 + 1.5;
+                this.inertia = Math.random() * 0.07 + 0.03;
+            }
+            randomizeSpawn() {
+                const border = Math.floor(Math.random() * 4);
+                if (border === 0) { this.x = Math.random() * canvas.width; this.y = -20; }
+                if (border === 1) { this.x = canvas.width + 20; this.y = Math.random() * canvas.height; }
+                if (border === 2) { this.x = Math.random() * canvas.width; this.y = canvas.height + 20; }
+                if (border === 3) { this.x = -20; this.y = Math.random() * canvas.height; }
+            }
+            update() {
+                this.x += (this.targetX - this.x) * this.inertia;
+                this.y += (this.targetY - this.y) * this.inertia;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Generate exactly 300 active particle instances
+        for (let i = 0; i < totalParticles; i++) {
+            particles.push(new TextParticle());
+        }
+
+        function buildTextCoordinates(textString) {
+            let targetPoints = [];
+            
+            if (textString === "HEART") {
+                for (let i = 0; i < totalParticles; i++) {
+                    let angle = (i / totalParticles) * Math.PI * 2;
+                    let x = 16 * Math.pow(Math.sin(angle), 3);
+                    let y = 13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle);
+                    targetPoints.push({
+                        x: canvas.width / 2 + x * 16,
+                        y: canvas.height / 2 - y * 16
+                    });
+                }
+            } else {
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 80px sans-serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(textString, canvas.width / 2, canvas.height / 2);
+                
+                const frameBuffer = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                let scannedPixels = [];
+                for (let y = 0; y < canvas.height; y += 4) {
+                    for (let x = 0; x < canvas.width; x += 4) {
+                        if (frameBuffer.data[(y * canvas.width + x) * 4 + 3] > 128) {
+                            scannedPixels.push({x: x, y: y});
+                        }
+                    }
+                }
+                
+                for (let i = 0; i < totalParticles; i++) {
+                    if(scannedPixels.length > 0) {
+                        let sampleIdx = Math.floor((i / totalParticles) * scannedPixels.length);
+                        targetPoints.push(scannedPixels[sampleIdx]);
+                    } else {
+                        targetPoints.push({x: canvas.width/2, y: canvas.height/2});
+                    }
+                }
+            }
+
+            particles.forEach((p, index) => {
+                p.targetX = targetPoints[index].x;
+                p.targetY = targetPoints[index].y;
+            });
+        }
+
+        // Initialize Phase 1 Text
+        buildTextCoordinates(sequenceTexts[timelineIndex]);
+
+        // Primary Scene 1 Loop Engine
+        let matrixAndParticleEngine = setInterval(() => {
+            renderMatrix();
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            animationClock++;
+            // Switch steps cleanly every 3.5 seconds (175 frames approx)
+            if(animationClock > 175) { 
+                animationClock = 0;
+                timelineIndex++;
+                if(timelineIndex < sequenceTexts.length) {
+                    // Explode outwards before re-assembling
+                    particles.forEach(p => p.randomizeSpawn());
+                    buildTextCoordinates(sequenceTexts[timelineIndex]);
+                } else {
+                    clearInterval(matrixAndParticleEngine);
+                    loadAnimeScene();
+                }
+            }
+        }, 20);
+
+
+        // --- 3. TRANSITION & ADVANCED ANIME TIMELINE ---
+        function loadAnimeScene() {
+            canvas.style.transition = "opacity 2s ease";
+            canvas.style.opacity = 0;
+            
+            const mainContainer = document.getElementById('anime-container');
+            mainContainer.classList.add('active');
+
+            setTimeout(() => {
+                playAnimeInteraction();
+            }, 2000);
+        }
+
+        function playAnimeInteraction() {
+            const wangLing = document.getElementById('wang-ling');
+            const sunRong = document.getElementById('sun-rong');
+            const candleFlame = document.getElementById('cake-flame');
+            const p1Bubble = document.getElementById('p1-talk');
+            const p2Bubble = document.getElementById('p2-talk');
+            
+            const boyArm = document.getElementById('boy-right-arm');
+            const girlArm = document.getElementById('girl-left-arm');
+
+            // 1. Wang Ling displays dialogue bubble
+            setTimeout(() => {
+                p1Bubble.classList.add('visible');
+            }, 800);
+
+            // 2. Sun Rong prepares to blow candle, leans forward
+            setTimeout(() => {
+                p1Bubble.classList.remove('visible');
+                p2Bubble.classList.add('visible');
+                sunRong.classList.add('lean-forward');
+            }, 3800);
+
+            // 3. Flame goes out instantly like real anime response
+            setTimeout(() => {
+                candleFlame.classList.add('extinguished');
+                p2Bubble.classList.remove('visible');
+            }, 5000);
+
+            // 4. Hands separate & Wang Ling pushes Sun Rong straight into the cake!
+            setTimeout(() => {
+                // Visual hand break transformation
+                boyArm.setAttribute("d", "M80,92 Q110,120 125,130"); // Arm stretches out to push
+                girlArm.setAttribute("d", "M34,92 Q10,130 5,165");
+                
+                wangLing.classList.add('push-action');
+                sunRong.classList.remove('lean-forward');
+                sunRong.classList.add('cake-fall'); // Falls right onto the cake matrix coordinate
+            }, 6400);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
