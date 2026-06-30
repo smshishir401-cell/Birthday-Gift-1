@@ -15,7 +15,7 @@
             height: 100%;
             overflow: hidden;
             background-color: #000;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
         canvas {
             position: absolute;
@@ -26,7 +26,7 @@
             z-index: 1;
         }
         
-        /* Scene 2: Wang Ling & Sun Rong Anime Stage */
+        /* Scene 2: Detailed Anime Container */
         #anime-container {
             position: absolute;
             top: 0;
@@ -37,7 +37,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b, #311042);
+            background: linear-gradient(180deg, #0b0f19 0%, #111827 50%, #1e1b4b 100%);
             opacity: 0;
             pointer-events: none;
             transition: opacity 2s ease-in-out;
@@ -49,142 +49,156 @@
 
         .stage {
             position: relative;
-            width: 800px;
-            height: 500px;
+            width: 700px;
+            height: 450px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: flex-end;
-            padding-bottom: 50px;
+            gap: 10px;
+            padding-bottom: 30px;
         }
 
-        /* Anime Characters Styling */
-        .character {
-            width: 160px;
-            height: 280px;
+        /* Upgraded Anime Characters Wrapper */
+        .character-group {
+            display: flex;
+            align-items: flex-end;
             position: relative;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            left: -40px; /* Offset to center the cake layout */
+        }
+
+        .character {
+            width: 150px;
+            height: 270px;
+            position: relative;
+            transition: all 0.5s ease-in-out;
         }
         
-        /* Wang Ling (Boy) */
+        /* Wang Ling Setup */
         .wang-ling {
-            transform: translateX(0);
-        }
-        .wang-ling.push {
-            animation: wangPush 0.8s forwards cubic-bezier(0.36, 0.07, 0.19, 0.97);
-        }
-
-        /* Sun Rong (Girl) */
-        .sun-rong {
-            transform: translateX(0);
+            z-index: 4;
             transform-origin: bottom center;
         }
-        .sun-rong.blow {
-            animation: sunBlow 1.2s ease alternate 2;
-        }
-        .sun-rong.smashed {
-            animation: sunSmashed 0.6s forwards ease-in-out;
+        .wang-ling.push-action {
+            animation: wangPushArm 0.8s forwards cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Birthday Cake */
-        .cake-wrapper {
+        /* Sun Rong Setup */
+        .sun-rong {
+            z-index: 3;
+            transform-origin: bottom left;
+        }
+        .sun-rong.lean-forward {
+            animation: sunBlowCandle 1.2s ease alternate 2;
+        }
+        .sun-rong.cake-fall {
+            animation: sunFaceplant 0.7s forwards cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+
+        /* Ultra Premium Cake */
+        .cake-space {
             position: absolute;
-            left: 50%;
-            bottom: 50px;
+            left: 62%;
+            bottom: 30px;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 5;
+            z-index: 10;
         }
-        .cake {
-            width: 120px;
-            height: 70px;
-            background: #fff0f5;
-            border-radius: 12px 12px 0 0;
+        .table-stand {
+            width: 140px;
+            height: 12px;
+            background: #475569;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .main-cake {
+            width: 100px;
+            height: 65px;
+            background: #fff;
+            border-radius: 12px 12px 2px 2px;
             position: relative;
-            box-shadow: 0 8px 0 #e0a3be, 0 15px 20px rgba(0,0,0,0.3);
+            border-bottom: 8px solid #f472b6;
+            box-shadow: inset 0 -15px 0 #fce7f3;
         }
-        .cake .cream-drip {
+        .frosting {
             position: absolute;
-            top: 20px;
-            left: 0;
+            top: 15px;
             width: 100%;
-            height: 15px;
-            background: #ffb3d1;
-            border-radius: 0 0 5px 5px;
+            height: 10px;
+            background: #f472b6;
+            border-radius: 0 0 4px 4px;
         }
-        .candle {
-            width: 10px;
-            height: 30px;
-            background: linear-gradient(to top, #ff66a3, #66ccff);
+        .candle-stick {
+            width: 8px;
+            height: 24px;
+            background: repeating-linear-gradient(45deg, #38bdf8, #38bdf8 4px, #fff 4px, #fff 8px);
             position: absolute;
-            top: -30px;
-            left: 55px;
-            border-radius: 3px;
+            top: -24px;
+            left: 46px;
+            border-radius: 2px;
         }
-        .flame {
-            width: 14px;
-            height: 22px;
-            background: radial-gradient(circle, #ffcc00 20%, #ff6600 100%);
+        .fire-flame {
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle, #ffedd5 10%, #f97316 60%, #ef4444 100%);
             border-radius: 50% 50% 20% 20%;
             position: absolute;
-            top: -22px;
+            top: -18px;
             left: -2px;
-            box-shadow: 0 0 15px #ffcc00, 0 0 25px #ff6600;
-            animation: flicker 0.15s infinite alternate;
+            box-shadow: 0 0 12px #f97316, 0 0 20px #ef4444;
+            animation: flameWobble 0.1s infinite alternate;
         }
-        .flame.out {
+        .fire-flame.extinguished {
             display: none;
         }
 
         /* Keyframes Animations */
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-1deg); }
-            100% { transform: scale(1.15) rotate(2deg); }
+        @keyframes flameWobble {
+            0% { transform: scale(1) rotate(-2deg); }
+            100% { transform: scale(1.1) rotate(3deg); }
         }
-        @keyframes sunBlow {
+        @keyframes sunBlowCandle {
             0% { transform: rotate(0deg); }
-            100% { transform: rotate(-25deg); }
+            100% { transform: rotate(18deg); }
         }
-        @keyframes wangPush {
+        @keyframes wangPushArm {
             0% { transform: translateX(0); }
-            40% { transform: translateX(190px) rotate(8deg); }
-            100% { transform: translateX(160px); }
+            30% { transform: translateX(15px) scaleX(1.03); }
+            100% { transform: translateX(10px); }
         }
-        @keyframes sunSmashed {
+        @keyframes sunFaceplant {
             0% { transform: rotate(0deg) translate(0, 0); }
-            100% { transform: translate(45px, 65px) rotate(85deg); }
+            100% { transform: rotate(72deg) translate(85px, 60px); }
         }
 
-        /* Dialogue Speech Bubbles */
-        .bubble {
+        /* Dialogue Prompts */
+        .speech-box {
             position: absolute;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 15px;
-            color: #1e1b4b;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: #ffffff;
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out;
             white-space: nowrap;
-            z-index: 10;
+            z-index: 20;
         }
-        .bubble::after {
+        .speech-box::after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 30px;
-            border-width: 10px 10px 0;
+            bottom: -8px;
+            left: 25px;
+            border-width: 8px 8px 0;
             border-style: solid;
-            border-color: rgba(255, 255, 255, 0.95) transparent;
-            display: block;
-            width: 0;
+            border-color: #ffffff transparent;
         }
-        #wang-bubble { top: 40px; left: 80px; }
-        #sun-bubble { top: 40px; right: 80px; }
-        .bubble.show { opacity: 1; }
+        #p1-talk { top: 20px; left: 30px; }
+        #p2-talk { top: 20px; right: -30px; }
+        .speech-box.visible { opacity: 1; }
     </style>
 </head>
 <body>
@@ -194,255 +208,13 @@
     <div id="anime-container">
         <div class="stage">
             
-            <div class="character wang-ling" id="wang-ling">
-                <div id="wang-bubble" class="bubble">Happy Birthday Juhi! 🎂</div>
-                <svg viewBox="0 0 100 200" width="100%" height="100%">
-                    <path d="M15,50 Q30,5 50,20 Q65,5 80,45 Q90,25 75,60 Q50,45 25,55 Z" fill="#1e293b"/>
-                    <path d="M30,35 L40,55 L45,40 L55,55 L65,35" stroke="#1e293b" stroke-width="4" fill="none"/>
-                    <circle cx="50" cy="65" r="24" fill="#fde047" opacity="0.3"/>
-                    <circle cx="50" cy="65" r="24" fill="#ffedd5"/>
-                    <line x1="38" y1="62" x2="46" y2="62" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="54" y1="62" x2="62" y2="62" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M46,75 Q50,78 54,75" stroke="#0f172a" stroke-width="2" fill="none"/>
-                    <path d="M26,88 L74,88 L78,170 L22,170 Z" fill="#312e81"/>
-                    <path d="M42,88 L50,110 L58,88" stroke="#ffffff" stroke-width="2" fill="none"/>
-                    <rect x="32" y="170" width="12" height="50" fill="#1e1b4b"/>
-                    <rect x="56" y="170" width="12" height="50" fill="#1e1b4b"/>
-                </svg>
-            </div>
-
-            <div class="cake-wrapper">
-                <div class="cake">
-                    <div class="cream-drip"></div>
-                    <div class="candle"><div class="flame" id="cake-flame"></div></div>
-                </div>
-            </div>
-
-            <div class="character sun-rong" id="sun-rong">
-                <div id="sun-bubble" class="bubble">Huffff... 💨</div>
-                <svg viewBox="0 0 100 200" width="100%" height="100%">
-                    <path d="M10,50 Q50,10 90,50 L85,190 L15,190 Z" fill="#2e1065"/>
-                    <circle cx="50" cy="65" r="24" fill="#ffedd5"/>
-                    <path d="M20,48 Q50,25 80,48 Q70,60 50,55 Q30,60 20,48" fill="#2e1065"/>
-                    <ellipse cx="40" cy="63" rx="3" ry="5" fill="#0f172a"/>
-                    <ellipse cx="60" cy="63" rx="3" ry="5" fill="#0f172a"/>
-                    <circle cx="36" cy="70" r="3" fill="#f43f5e" opacity="0.5"/>
-                    <circle cx="64" cy="70" r="3" fill="#f43f5e" opacity="0.5"/>
-                    <circle cx="50" cy="74" r="3" fill="none" stroke="#0f172a" stroke-width="2"/>
-                    <path d="M28,88 L72,88 L82,170 L18,170 Z" fill="#9d174d"/>
-                    <path d="M20,150 L80,150" stroke="#ffffff" stroke-width="3" fill="none"/>
-                    <rect x="35" y="170" width="10" height="50" fill="#ffedd5"/>
-                    <rect x="55" y="170" width="10" height="50" fill="#ffedd5"/>
-                </svg>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // --- 1. BLUE MATRIX HACKING RAIN ---
-        const matrixChars = "0101010101010101BINARY";
-        const charArr = matrixChars.split("");
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const rainDrops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0066ff'; // Electric Blue Matrix
-            ctx.font = fontSize + 'px monospace';
-
-            for(let i = 0; i < rainDrops.length; i++) {
-                const text = charArr[Math.floor(Math.random() * charArr.length)];
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+            <div class="character-group">
                 
-                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
-                }
-                rainDrops[i]++;
-            }
-        }
-
-        // --- 2. 300 PINK PARTICLES TEXT SYSTEM ---
-        let particles = [];
-        const maxParticles = 300; // EXACTLY 300 PARTICLES AS REQUESTED
-        let textStage = 0; 
-        const texts = ["Happy birthday", "To YOU", "JUHI", "HEART"];
-        let stageTimer = 0;
-
-        class Particle {
-            constructor() {
-                // Particles enter from all directions (charidek theke asbe)
-                this.resetToEdges();
-                this.targetX = canvas.width / 2;
-                this.targetY = canvas.height / 2;
-                this.color = '#ff66cc'; // Pink Particle
-                this.size = Math.random() * 3 + 1.5;
-                this.speed = Math.random() * 0.06 + 0.03;
-            }
-            resetToEdges() {
-                const edge = Math.floor(Math.random() * 4);
-                if (edge === 0) { this.x = Math.random() * canvas.width; this.y = -10; } // Top
-                if (edge === 1) { this.x = canvas.width + 10; this.y = Math.random() * canvas.height; } // Right
-                if (edge === 2) { this.x = Math.random() * canvas.width; this.y = canvas.height + 10; } // Bottom
-                if (edge === 3) { this.x = -10; this.y = Math.random() * canvas.height; } // Left
-            }
-            update() {
-                this.x += (this.targetX - this.x) * this.speed;
-                this.y += (this.targetY - this.y) * this.speed;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // Initialize exactly 300 particles once
-        for (let i = 0; i < maxParticles; i++) {
-            particles.push(new Particle());
-        }
-
-        function calculateTargets(targetText) {
-            let targets = [];
-            
-            if (targetText === "HEART") {
-                // Heart shape parametric calculation for 300 points
-                for (let i = 0; i < maxParticles; i++) {
-                    let t = (i / maxParticles) * Math.PI * 2;
-                    let x = 16 * Math.pow(Math.sin(t), 3);
-                    let y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-                    targets.push({
-                        x: canvas.width / 2 + x * 16,
-                        y: canvas.height / 2 - y * 16
-                    });
-                }
-            } else {
-                // Text target positioning mapping
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 75px sans-serif";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(targetText, canvas.width / 2, canvas.height / 2);
-                
-                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                let points = [];
-                for (let y = 0; y < canvas.height; y += 3) {
-                    for (let x = 0; x < canvas.width; x += 3) {
-                        if (imgData.data[(y * canvas.width + x) * 4 + 3] > 128) {
-                            points.push({x: x, y: y});
-                        }
-                    }
-                }
-                
-                // Distribute text points evenly among the 300 particles
-                for (let i = 0; i < maxParticles; i++) {
-                    if(points.length > 0) {
-                        let idx = Math.floor((i / maxParticles) * points.length);
-                        targets.push(points[idx]);
-                    } else {
-                        targets.push({x: canvas.width/2, y: canvas.height/2});
-                    }
-                }
-            }
-
-            // Assign new targets to existing particles
-            particles.forEach((p, index) => {
-                p.targetX = targets[index].x;
-                p.targetY = targets[index].y;
-            });
-        }
-
-        // Set up the first text target
-        calculateTargets(texts[textStage]);
-
-        // Main Animation Loop for Scene 1
-        let scene1Loop = setInterval(() => {
-            drawMatrix();
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            stageTimer++;
-            // Change texts or move to heart shape every 3.5 seconds
-            if(stageTimer > 180) { 
-                stageTimer = 0;
-                textStage++;
-                if(textStage < texts.length) {
-                    // Break current configuration and assign new targets
-                    calculateTargets(texts[textStage]);
-                } else {
-                    // Exit Scene 1 and slide to the Anime Page
-                    clearInterval(scene1Loop);
-                    transitionToAnimeScene();
-                }
-            }
-        }, 20);
-
-
-        // --- 3. TRANSITION TO REAL ANIME SCENE ---
-        function transitionToAnimeScene() {
-            canvas.style.transition = "opacity 2.5s ease";
-            canvas.style.opacity = 0;
-            
-            const animeContainer = document.getElementById('anime-container');
-            animeContainer.classList.add('active');
-
-            setTimeout(() => {
-                executeAnimeTimeline();
-            }, 2000);
-        }
-
-        function executeAnimeTimeline() {
-            const wang = document.getElementById('wang-ling');
-            const sun = document.getElementById('sun-rong');
-            const flame = document.getElementById('cake-flame');
-            const wangBubble = document.getElementById('wang-bubble');
-            const sunBubble = document.getElementById('sun-bubble');
-
-            // Step 1: Wang Ling wishes Sun Rong (Juhi Context)
-            setTimeout(() => {
-                wangBubble.classList.add('show');
-            }, 1000);
-
-            // Step 2: Sun Rong leans forward to blow the candle like real anime
-            setTimeout(() => {
-                wangBubble.classList.remove('show');
-                sunBubble.classList.add('show');
-                sun.classList.add('blow');
-            }, 4000);
-
-            // Step 3: Candle goes completely out!
-            setTimeout(() => {
-                flame.classList.add('out');
-                sunBubble.classList.remove('show');
-            }, 5200);
-
-            // Step 4: Wang Ling pushes Sun Rong's face straight down into the birthday cake!
-            setTimeout(() => {
-                wang.classList.add('push');
-                sun.classList.remove('blow');
-                sun.classList.add('smashed');
-            }, 6800);
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-</body>
-</html>
+                <div class="character wang-ling" id="wang-ling">
+                    <div id="p1-talk" class="speech-box">Happy Birthday Juhi! 🎉</div>
+                    <svg viewBox="0 0 120 280" width="100%" height="100%">
+                        <path d="M25,55 Q15,35 35,15 Q55,2 75,18 Q95,30 85,55 Q70,40 55,48 Q35,42 25,55 Z" fill="#1e293b"/>
+                        <path d="M35,35 L45,52 L52,38 L62,54 L72,36" stroke="#1e293b" stroke-width="4" stroke-linecap="round" fill="none"/>
+                        <circle cx="55" cy="65" r="23" fill="#ffedd5"/>
+                        <path d="M42,60 Q48,58 50,62" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+                        <path d="M62,60 Q68,58 70,62" stroke="#0f172a"
