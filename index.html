@@ -2,22 +2,24 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday Juhi!</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
             background-color: #000;
-            font-family: 'Courier New', Courier, monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Scene 1: Canvas Environment */
         #scene1 {
             position: absolute;
             width: 100%;
@@ -32,27 +34,27 @@
             width: 100%;
             height: 100%;
         }
+        
+        /* Smooth fade-in and fade-out for Text */
         #text-overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: #ff69b4; 
-            font-size: 4rem;
+            font-size: 2.2rem; 
             font-weight: bold;
             text-align: center;
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4);
+            letter-spacing: 3px;
+            width: 90%;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 105, 180, 0.4);
             font-family: Arial, sans-serif;
             pointer-events: none;
-            animation: pulse 2s infinite alternate;
+            opacity: 1;
+            transition: opacity 1.5s ease-in-out;
         }
 
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-        }
-
+        /* Scene 2: Royal Scroll Paper */
         #scene2 {
             position: absolute;
             width: 100%;
@@ -64,24 +66,25 @@
             opacity: 0;
             z-index: 1;
             transition: opacity 2s ease-in-out;
-            padding: 20px;
+            padding: 15px;
         }
 
         .royal-scroll {
             background: #f4ecd8; 
-            border-left: 25px solid #d4af37; 
-            border-right: 25px solid #d4af37; 
+            border-left: 15px solid #d4af37; 
+            border-right: 15px solid #d4af37; 
             box-shadow: 
-                0 0 30px rgba(0, 0, 0, 0.7), 
-                inset 0 0 40px rgba(139, 94, 26, 0.3); 
-            padding: 40px 50px;
-            max-width: 750px;
+                0 0 20px rgba(0, 0, 0, 0.7), 
+                inset 0 0 30px rgba(139, 94, 26, 0.3); 
+            padding: 30px 20px;
             width: 100%;
-            min-height: 450px;
+            max-width: 500px;
+            max-height: 85vh; 
+            overflow-y: auto; 
             position: relative;
             color: #2b1d0c; 
-            font-size: 1.35rem;
-            line-height: 1.8;
+            font-size: 1.05rem; 
+            line-height: 1.6;
             text-align: center;
             font-family: 'SolaimanLipi', 'Kalpurush', 'Segoe UI', sans-serif;
             border-radius: 4px;
@@ -90,21 +93,21 @@
         .royal-scroll::before {
             content: "";
             position: absolute;
-            top: -10px; left: -30px; right: -30px;
-            height: 15px;
+            top: -6px; left: -20px; right: -20px;
+            height: 10px;
             background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
 
         .royal-scroll::after {
             content: "";
             position: absolute;
-            bottom: -10px; left: -30px; right: -30px;
-            height: 15px;
+            bottom: -6px; left: -20px; right: -20px;
+            height: 10px;
             background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
             border-radius: 10px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.4);
         }
 
         .wish-text {
@@ -115,8 +118,8 @@
 
         .cursor {
             display: inline-block;
-            width: 3px;
-            height: 1.4rem;
+            width: 2px;
+            height: 1.2rem;
             background-color: #2b1d0c;
             animation: blink 0.8s infinite;
             vertical-align: middle;
@@ -125,15 +128,26 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+
+        @media (min-width: 768px) {
+            #text-overlay { font-size: 4rem; letter-spacing: 5px; }
+            .royal-scroll { font-size: 1.35rem; line-height: 1.8; max-width: 750px; padding: 40px 50px; border-left-width: 25px; border-right-width: 25px; }
+            .royal-scroll::before { top: -10px; left: -30px; right: -30px; height: 15px; }
+            .royal-scroll::after { bottom: -10px; left: -30px; right: -30px; height: 15px; }
+            .cursor { width: 3px; height: 1.4rem; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Scene 1 -->
     <div id="scene1">
         <canvas id="matrixCanvas"></canvas>
+        <canvas id="particleCanvas"></canvas>
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
+    <!-- Scene 2 -->
     <div id="scene2">
         <div class="royal-scroll">
             <span class="wish-text" id="typewriter"></span><span class="cursor" id="cursor"></span>
@@ -141,57 +155,143 @@
     </div>
 
     <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+        // --- CANVAS SETUP ---
+        const mCanvas = document.getElementById('matrixCanvas');
+        const mCtx = mCanvas.getContext('2d');
+        const pCanvas = document.getElementById('particleCanvas');
+        const pCtx = pCanvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        function resizeCanvases() {
+            mCanvas.width = pCanvas.width = window.innerWidth;
+            mCanvas.height = pCanvas.height = window.innerHeight;
+        }
+        resizeCanvases();
 
+        // --- MATRIX CODE RAIN ---
         const katakana = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]+-*';
         const alphabet = katakana.split('');
-
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-
-        const rainDrops = [];
+        const fontSize = 14;
+        let columns = mCanvas.width / fontSize;
+        let rainDrops = [];
 
         for (let x = 0; x < columns; x++) {
             rainDrops[x] = 1;
         }
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#0F0'; 
-            ctx.font = fontSize + 'px monospace';
+            mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            mCtx.fillStyle = '#0F0'; 
+            mCtx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                mCtx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                if (rainDrops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
                     rainDrops[i] = 0;
                 }
                 rainDrops[i]++;
             }
         }
-
         const matrixInterval = setInterval(drawMatrix, 30);
 
-        const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
-কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
+        // --- PINK PARTICLES LUV ANIMATION ---
+        const particles = [];
+        const numParticles = 120; 
+        let makeHeart = false;
 
-জীবন নামের এই সুন্দর গল্পে তোমার প্রতিটি অধ্যায় যেন নতুন সাফল্যে ভরে ওঠে। যত বড়ই হও না কেন, আমাদের এই বন্ধুত্বের বন্ধন যেন আজীবন এমনই অটুট আর অমলিন থাকে। পেছনের সব গ্লানি ভুলে সামনের দিনগুলোতে ডানা মেলে উড়ে বেড়াও নিজের মতো করে।
+        // Generate Heart Points using Mathematical Equation
+        const heartPoints = [];
+        const scale = Math.min(pCanvas.width, pCanvas.height) / 35; // Responsive heart size
 
-একটি অবিস্মরণীয় জন্মদিন কাটুক তোমার! শুভ জন্মদিন! 🎂🎈`;
+        for (let angle = 0; angle < Math.PI * 2; angle += (Math.PI * 2) / numParticles) {
+            // Heart formula: x = 16sin^3(t), y = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)
+            const x = 16 * Math.pow(Math.sin(angle), 3);
+            const y = 13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle);
+            
+            // Transform coordinates to screen center
+            heartPoints.push({
+                x: pCanvas.width / 2 + x * scale,
+                y: pCanvas.height / 2 - y * scale // Inverted minus because canvas y goes down
+            });
+        }
 
+        // Particle Class
+        class Particle {
+            constructor(targetX, targetY) {
+                // Start randomly anywhere on screen
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.size = Math.random() * 3 + 2;
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.speedY = (Math.random() - 0.5) * 4;
+                this.alpha = Math.random() * 0.5 + 0.5;
+            }
+
+            update() {
+                if (!makeHeart) {
+                    // Float around naturally at first
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > pCanvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > pCanvas.height) this.speedY *= -1;
+                } else {
+                    // Pull towards heart coordinate
+                    this.x += (this.targetX - this.x) * 0.08;
+                    this.y += (this.targetY - this.y) * 0.08;
+                    this.size = 4; // Glow up a bit
+                }
+            }
+
+            draw() {
+                pCtx.save();
+                pCtx.globalAlpha = this.alpha;
+                pCtx.shadowBlur = 10;
+                pCtx.shadowColor = '#ff69b4';
+                pCtx.fillStyle = '#ff69b4';
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
+                pCtx.restore();
+            }
+        }
+
+        // Initialize particles based on calculated heart vertices
+        for (let i = 0; i < numParticles; i++) {
+            const pt = heartPoints[i] || { x: pCanvas.width/2, y: pCanvas.height/2 };
+            particles.push(new Particle(pt.x, pt.y));
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // --- TRANSITIONS FLOW ---
+        const textOverlay = document.getElementById('text-overlay');
         const scene1 = document.getElementById('scene1');
         const scene2 = document.getElementById('scene2');
         const typewriterElement = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
 
+        // 1. ৩.৫ সেকেন্ড পর টেক্সটটি হাইড হবে এবং পার্টিকেলগুলো লাভ তৈরি করা শুরু করবে
+        setTimeout(() => {
+            textOverlay.style.opacity = '0';
+            makeHeart = true;
+        }, 3500);
+
+        // 2. মোট ৮ সেকেন্ড পর প্রথম সিন চলে যাবে এবং ২য় সিন চলে আসবে
         setTimeout(() => {
             clearInterval(matrixInterval);
             scene1.style.opacity = '0';
@@ -201,9 +301,20 @@
                 scene2.style.zIndex = '2';
                 scene2.style.opacity = '1';
                 
+                // টাইপরাইটার স্টার্ট
                 setTimeout(startTyping, 1000);
             }, 2000);
-        }, 6000);
+        }, 8000);
+
+
+        // --- TYPEWRITER LOGIC ---
+        const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
+
+কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
+
+জীবন নামের এই সুন্দর গল্পে তোমার প্রতিটি অধ্যায় যেন নতুন সাফল্যে ভরে ওঠে। যত বড়ই হও না কেন, আমাদের এই বন্ধুত্বের বন্ধন যেন আজীবন এমনই অটুট আর অমলিন থাকে। পেছনের সব গ্লানি ভুলে সামনের দিনগুলোতে ডানা মেলে উড়ে বেড়াও নিজের মতো করে।
+
+একটি অবিস্মরণীয় জন্মদিন কাটুক তোমার! শুভ জন্মদিন! 🎂🎈`;
 
         let index = 0;
         function startTyping() {
@@ -220,8 +331,22 @@
         }
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            resizeCanvases();
+            columns = mCanvas.width / fontSize;
+            if(mCanvas.width > rainDrops.length) {
+                for(let i = rainDrops.length; i < columns; i++) {
+                    rainDrops[i] = 1;
+                }
+            }
+            // Recalculate heart position on orientation change
+            const newScale = Math.min(pCanvas.width, pCanvas.height) / 35;
+            for (let i = 0; i < numParticles; i++) {
+                const angle = (Math.PI * 2 / numParticles) * i;
+                const x = 16 * Math.pow(Math.sin(angle), 3);
+                const y = 13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle);
+                particles[i].targetX = pCanvas.width / 2 + x * newScale;
+                particles[i].targetY = pCanvas.height / 2 - y * newScale;
+            }
         });
     </script>
 </body>
