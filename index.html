@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,16 @@
             height: 100%;
             overflow: hidden;
             background-color: #000;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Courier New', Courier, monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Scene 1: Code Rain & Particle Text */
+        #scene1 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            transition: opacity 2s ease-in-out;
         }
         canvas {
             position: absolute;
@@ -23,445 +32,184 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
         }
-        
-        /* Scene 2: Detailed Anime Container */
-        #anime-container {
+        #text-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff69b4; /* Pink */
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4);
+            font-family: Arial, sans-serif;
+            pointer-events: none;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+        }
+
+        /* Scene 2: Black Page & Golden Decorated Paper */
+        #scene2 {
+            position: absolute;
             width: 100%;
             height: 100%;
-            z-index: 2;
+            background-color: #0d0d0d;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(180deg, #0b0f19 0%, #111827 50%, #1e1b4b 100%);
             opacity: 0;
-            pointer-events: none;
+            z-index: 1;
             transition: opacity 2s ease-in-out;
-        }
-        #anime-container.active {
-            opacity: 1;
-            pointer-events: auto;
+            padding: 20px;
         }
 
-        .stage {
-            position: relative;
-            width: 700px;
-            height: 450px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 10px;
-            padding-bottom: 30px;
-        }
-
-        /* Upgraded Anime Characters Wrapper */
-        .character-group {
-            display: flex;
-            align-items: flex-end;
-            position: relative;
-            left: -40px; /* Offset to center the cake layout */
-        }
-
-        .character {
-            width: 150px;
-            height: 270px;
-            position: relative;
-            transition: all 0.5s ease-in-out;
-        }
-        
-        /* Wang Ling Setup */
-        .wang-ling {
-            z-index: 4;
-            transform-origin: bottom center;
-        }
-        .wang-ling.push-action {
-            animation: wangPushArm 0.8s forwards cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Sun Rong Setup */
-        .sun-rong {
-            z-index: 3;
-            transform-origin: bottom left;
-        }
-        .sun-rong.lean-forward {
-            animation: sunBlowCandle 1.2s ease alternate 2;
-        }
-        .sun-rong.cake-fall {
-            animation: sunFaceplant 0.7s forwards cubic-bezier(0.6, -0.28, 0.735, 0.045);
-        }
-
-        /* Ultra Premium Cake */
-        .cake-space {
-            position: absolute;
-            left: 62%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-        .table-stand {
-            width: 140px;
-            height: 12px;
-            background: #475569;
-            border-radius: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .main-cake {
-            width: 100px;
-            height: 65px;
-            background: #fff;
-            border-radius: 12px 12px 2px 2px;
-            position: relative;
-            border-bottom: 8px solid #f472b6;
-            box-shadow: inset 0 -15px 0 #fce7f3;
-        }
-        .frosting {
-            position: absolute;
-            top: 15px;
+        .golden-paper {
+            background: #1a1a1a;
+            border: 5px double #d4af37; /* Golden Border */
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.2);
+            padding: 40px;
+            max-width: 700px;
             width: 100%;
-            height: 10px;
-            background: #f472b6;
-            border-radius: 0 0 4px 4px;
-        }
-        .candle-stick {
-            width: 8px;
-            height: 24px;
-            background: repeating-linear-gradient(45deg, #38bdf8, #38bdf8 4px, #fff 4px, #fff 8px);
-            position: absolute;
-            top: -24px;
-            left: 46px;
-            border-radius: 2px;
-        }
-        .fire-flame {
-            width: 12px;
-            height: 20px;
-            background: radial-gradient(circle, #ffedd5 10%, #f97316 60%, #ef4444 100%);
-            border-radius: 50% 50% 20% 20%;
-            position: absolute;
-            top: -18px;
-            left: -2px;
-            box-shadow: 0 0 12px #f97316, 0 0 20px #ef4444;
-            animation: flameWobble 0.1s infinite alternate;
-        }
-        .fire-flame.extinguished {
-            display: none;
+            border-radius: 10px;
+            position: relative;
+            color: #f3e5ab; /* Soft Gold Text */
+            font-size: 1.25rem;
+            line-height: 1.8;
+            text-align: center;
         }
 
-        /* Keyframes Animations */
-        @keyframes flameWobble {
-            0% { transform: scale(1) rotate(-2deg); }
-            100% { transform: scale(1.1) rotate(3deg); }
+        /* Decorative Corners */
+        .golden-paper::before, .golden-paper::after {
+            content: "✦";
+            position: absolute;
+            color: #d4af37;
+            font-size: 1.5rem;
         }
-        @keyframes sunBlowCandle {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(18deg); }
-        }
-        @keyframes wangPushArm {
-            0% { transform: translateX(0); }
-            30% { transform: translateX(15px) scaleX(1.03); }
-            100% { transform: translateX(10px); }
-        }
-        @keyframes sunFaceplant {
-            0% { transform: rotate(0deg) translate(0, 0); }
-            100% { transform: rotate(72deg) translate(85px, 60px); }
+        .golden-paper::before { top: 10px; left: 15px; }
+        .golden-paper::after { bottom: 10px; right: 15px; }
+
+        .wish-text {
+            min-height: 200px;
+            white-space: pre-line;
         }
 
-        /* Dialogue Prompts */
-        .speech-box {
-            position: absolute;
-            background: #ffffff;
-            padding: 10px 16px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 14px;
-            color: #0f172a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            white-space: nowrap;
-            z-index: 20;
+        /* Cursor Effect */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: #d4af37;
+            animation: blink 0.8s infinite;
         }
-        .speech-box::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 25px;
-            border-width: 8px 8px 0;
-            border-style: solid;
-            border-color: #ffffff transparent;
+        @keyframes blink {
+            50% { opacity: 0; }
         }
-        #p1-talk { top: 20px; left: 30px; }
-        #p2-talk { top: 20px; right: -30px; }
-        .speech-box.visible { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
+    <!-- Scene 1 -->
+    <div id="scene1">
+        <canvas id="matrixCanvas"></canvas>
+        <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
+    </div>
 
-    <div id="anime-container">
-        <div class="stage">
-            
-            <div class="character-group">
-                
-                <div class="character wang-ling" id="wang-ling">
-                    <div id="p1-talk" class="speech-box">Happy Birthday Juhi! 🎉</div>
-                    <svg viewBox="0 0 120 280" width="100%" height="100%">
-                        <path d="M25,55 Q15,35 35,15 Q55,2 75,18 Q95,30 85,55 Q70,40 55,48 Q35,42 25,55 Z" fill="#1e293b"/>
-                        <path d="M35,35 L45,52 L52,38 L62,54 L72,36" stroke="#1e293b" stroke-width="4" stroke-linecap="round" fill="none"/>
-                        <circle cx="55" cy="65" r="23" fill="#ffedd5"/>
-                        <path d="M42,60 Q48,58 50,62" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-                        <path d="M62,60 Q68,58 70,62" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-                        <circle cx="46" cy="64" r="2" fill="#0f172a"/>
-                        <circle cx="66" cy="64" r="2" fill="#0f172a"/>
-                        <path d="M50,76 Q55,79 60,76" stroke="#334155" stroke-width="2" fill="none"/>
-                        <path d="M30,88 L80,88 L85,190 L25,190 Z" fill="#1e1b4b"/>
-                        <path d="M30,88 L55,120 L80,88" fill="#312e81"/>
-                        <path d="M51,120 L51,190" stroke="#f1f5f9" stroke-width="1.5"/>
-                        <path d="M30,90 Q15,130 22,170" stroke="#1e1b4b" stroke-width="12" stroke-linecap="round" fill="none"/>
-                        <path id="boy-right-arm" d="M80,92 Q95,130 98,165" stroke="#1e1b4b" stroke-width="12" stroke-linecap="round" fill="none"/>
-                        <rect x="38" y="190" width="12" height="65" fill="#0f172a"/>
-                        <rect x="60" y="190" width="12" height="65" fill="#0f172a"/>
-                    </svg>
-                </div>
-
-                <div class="character sun-rong" id="sun-rong">
-                    <div id="p2-talk" class="speech-box">Let me blow the candle! *Fu* 💨</div>
-                    <svg viewBox="0 0 120 280" width="100%" height="100%">
-                        <path d="M20,55 Q55,8 90,55 L95,210 L15,210 Z" fill="#2e1065"/>
-                        <circle cx="55" cy="65" r="23" fill="#ffedd5"/>
-                        <ellipse cx="44" cy="62" rx="3.5" ry="5.5" fill="#1e1b4b"/>
-                        <ellipse cx="66" cy="62" rx="3.5" ry="5.5" fill="#1e1b4b"/>
-                        <ellipse cx="40" cy="71" rx="4" ry="2" fill="#fda4af" opacity="0.6"/>
-                        <ellipse cx="70" cy="71" rx="4" ry="2" fill="#fda4af" opacity="0.6"/>
-                        <circle cx="55" cy="74" r="3.5" fill="#ffedd5" stroke="#1e1b4b" stroke-width="2"/>
-                        <path d="M26,50 Q55,20 84,50 Q75,65 55,60 Q35,65 26,50" fill="#2e1065"/>
-                        <path d="M32,88 L78,88 L86,190 L24,190 Z" fill="#9d174d"/>
-                        <path d="M24,165 L86,165" stroke="#fce7f3" stroke-width="4"/>
-                        <path id="girl-left-arm" d="M34,92 Q18,130 16,165" stroke="#9d174d" stroke-width="11" stroke-linecap="round" fill="none"/>
-                        <path d="M76,90 Q90,130 84,170" stroke="#9d174d" stroke-width="11" stroke-linecap="round" fill="none"/>
-                        <rect x="40" y="190" width="10" height="65" fill="#ffedd5"/>
-                        <rect x="62" y="190" width="10" height="65" fill="#ffedd5"/>
-                    </svg>
-                </div>
-
-            </div> <div class="cake-space">
-                <div class="main-cake">
-                    <div class="frosting"></div>
-                    <div class="candle-stick"><div class="fire-flame" id="cake-flame"></div></div>
-                </div>
-                <div class="table-stand"></div>
-            </div>
-
+    <!-- Scene 2 -->
+    <div id="scene2">
+        <div class="golden-paper">
+            <div class="wish-text" id="typewriter"></div><span class="cursor" id="cursor">|</span>
         </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('canvas');
+        // --- MATRIX CODE RAIN ---
+        const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // --- 1. DIGITAL BLUE MATRIX BACKGROUND ---
-        const binarySet = "01010101010101010101";
-        const matrixChars = binarySet.split("");
+        const katakana = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]+-*';
+        const alphabet = katakana.split('');
+
         const fontSize = 16;
         const columns = canvas.width / fontSize;
-        const rainDrops = Array(Math.floor(columns)).fill(1);
 
-        function renderMatrix() {
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0052ff'; 
+
+            ctx.fillStyle = '#0F0'; // Green code rain text
             ctx.font = fontSize + 'px monospace';
 
-            for(let i = 0; i < rainDrops.length; i++) {
-                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
                 ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     rainDrops[i] = 0;
                 }
                 rainDrops[i]++;
             }
         }
 
-        // --- 2. EXACTLY 300 PARTICLES DYNAMIC PIPELINE ---
-        let particles = [];
-        const totalParticles = 300;
-        let timelineIndex = 0; 
-        const sequenceTexts = ["Happy birthday", "To YOU", "JUHI", "HEART"];
-        let animationClock = 0;
+        const matrixInterval = setInterval(drawMatrix, 30);
 
-        class TextParticle {
-            constructor() {
-                this.randomizeSpawn();
-                this.targetX = canvas.width / 2;
-                this.targetY = canvas.height / 2;
-                this.color = '#ff66cc'; 
-                this.radius = Math.random() * 2.5 + 1.5;
-                this.inertia = Math.random() * 0.07 + 0.03;
-            }
-            randomizeSpawn() {
-                const border = Math.floor(Math.random() * 4);
-                if (border === 0) { this.x = Math.random() * canvas.width; this.y = -20; }
-                if (border === 1) { this.x = canvas.width + 20; this.y = Math.random() * canvas.height; }
-                if (border === 2) { this.x = Math.random() * canvas.width; this.y = canvas.height + 20; }
-                if (border === 3) { this.x = -20; this.y = Math.random() * canvas.height; }
-            }
-            update() {
-                this.x += (this.targetX - this.x) * this.inertia;
-                this.y += (this.targetY - this.y) * this.inertia;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+        // --- TRANSITION & TYPEWRITER EFFECT ---
+        const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
-        // Generate exactly 300 active particle instances
-        for (let i = 0; i < totalParticles; i++) {
-            particles.push(new TextParticle());
-        }
+কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
 
-        function buildTextCoordinates(textString) {
-            let targetPoints = [];
+জীবন নামের এই সুন্দর গল্পে তোমার প্রতিটি অধ্যায় যেন নতুন সাফল্যে ভরে ওঠে। যত বড়ই হও না কেন, আমাদের এই বন্ধুত্বের বন্ধন যেন আজীবন এমনই অটুট আর অমলিন থাকে। পেছনের সব গ্লানি ভুলে সামনের দিনগুলোতে ডানা মেলে উড়ে বেড়াও নিজের মতো করে।
+
+একটি অবিস্মরণীয় জন্মদিন কাটুক তোমার! শুভ জন্মদিন! 🎂🎈`;
+
+        const scene1 = document.getElementById('scene1');
+        const scene2 = document.getElementById('scene2');
+        const typewriterElement = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
+
+        // 6 সেকেন্ড পর প্রথম সিন চলে যাবে এবং ২য় সিন আসবে (6000ms)
+        setTimeout(() => {
+            clearInterval(matrixInterval);
+            scene1.style.opacity = '0';
             
-            if (textString === "HEART") {
-                for (let i = 0; i < totalParticles; i++) {
-                    let angle = (i / totalParticles) * Math.PI * 2;
-                    let x = 16 * Math.pow(Math.sin(angle), 3);
-                    let y = 13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle);
-                    targetPoints.push({
-                        x: canvas.width / 2 + x * 16,
-                        y: canvas.height / 2 - y * 16
-                    });
-                }
-            } else {
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 80px sans-serif";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(textString, canvas.width / 2, canvas.height / 2);
-                
-                const frameBuffer = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                let scannedPixels = [];
-                for (let y = 0; y < canvas.height; y += 4) {
-                    for (let x = 0; x < canvas.width; x += 4) {
-                        if (frameBuffer.data[(y * canvas.width + x) * 4 + 3] > 128) {
-                            scannedPixels.push({x: x, y: y});
-                        }
-                    }
-                }
-                
-                for (let i = 0; i < totalParticles; i++) {
-                    if(scannedPixels.length > 0) {
-                        let sampleIdx = Math.floor((i / totalParticles) * scannedPixels.length);
-                        targetPoints.push(scannedPixels[sampleIdx]);
-                    } else {
-                        targetPoints.push({x: canvas.width/2, y: canvas.height/2});
-                    }
-                }
-            }
-
-            particles.forEach((p, index) => {
-                p.targetX = targetPoints[index].x;
-                p.targetY = targetPoints[index].y;
-            });
-        }
-
-        // Initialize Phase 1 Text
-        buildTextCoordinates(sequenceTexts[timelineIndex]);
-
-        // Primary Scene 1 Loop Engine
-        let matrixAndParticleEngine = setInterval(() => {
-            renderMatrix();
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            animationClock++;
-            // Switch steps cleanly every 3.5 seconds (175 frames approx)
-            if(animationClock > 175) { 
-                animationClock = 0;
-                timelineIndex++;
-                if(timelineIndex < sequenceTexts.length) {
-                    // Explode outwards before re-assembling
-                    particles.forEach(p => p.randomizeSpawn());
-                    buildTextCoordinates(sequenceTexts[timelineIndex]);
-                } else {
-                    clearInterval(matrixAndParticleEngine);
-                    loadAnimeScene();
-                }
-            }
-        }, 20);
-
-
-        // --- 3. TRANSITION & ADVANCED ANIME TIMELINE ---
-        function loadAnimeScene() {
-            canvas.style.transition = "opacity 2s ease";
-            canvas.style.opacity = 0;
-            
-            const mainContainer = document.getElementById('anime-container');
-            mainContainer.classList.add('active');
-
             setTimeout(() => {
-                playAnimeInteraction();
+                scene1.style.display = 'none';
+                scene2.style.zIndex = '2';
+                scene2.style.opacity = '1';
+                
+                // টাইপরাইটার ইফেক্ট শুরু
+                setTimeout(startTyping, 1000);
             }, 2000);
+        }, 6000);
+
+        let index = 0;
+        function startTyping() {
+            function type() {
+                if (index < message.length) {
+                    typewriterElement.textContent += message.charAt(index);
+                    index++;
+                    setTimeout(type, 50); // টাইপিং স্পিড (মিলিসেকেন্ডে)
+                } else {
+                    cursor.style.display = 'none'; // টাইপিং শেষ হলে কার্সার চলে যাবে
+                }
+            }
+            type();
         }
 
-        function playAnimeInteraction() {
-            const wangLing = document.getElementById('wang-ling');
-            const sunRong = document.getElementById('sun-rong');
-            const candleFlame = document.getElementById('cake-flame');
-            const p1Bubble = document.getElementById('p1-talk');
-            const p2Bubble = document.getElementById('p2-talk');
-            
-            const boyArm = document.getElementById('boy-right-arm');
-            const girlArm = document.getElementById('girl-left-arm');
-
-            // 1. Wang Ling displays dialogue bubble
-            setTimeout(() => {
-                p1Bubble.classList.add('visible');
-            }, 800);
-
-            // 2. Sun Rong prepares to blow candle, leans forward
-            setTimeout(() => {
-                p1Bubble.classList.remove('visible');
-                p2Bubble.classList.add('visible');
-                sunRong.classList.add('lean-forward');
-            }, 3800);
-
-            // 3. Flame goes out instantly like real anime response
-            setTimeout(() => {
-                candleFlame.classList.add('extinguished');
-                p2Bubble.classList.remove('visible');
-            }, 5000);
-
-            // 4. Hands separate & Wang Ling pushes Sun Rong straight into the cake!
-            setTimeout(() => {
-                // Visual hand break transformation
-                boyArm.setAttribute("d", "M80,92 Q110,120 125,130"); // Arm stretches out to push
-                girlArm.setAttribute("d", "M34,92 Q10,130 5,165");
-                
-                wangLing.classList.add('push-action');
-                sunRong.classList.remove('lean-forward');
-                sunRong.classList.add('cake-fall'); // Falls right onto the cake matrix coordinate
-            }, 6400);
-        }
-
+        // Window resize handle
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
