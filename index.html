@@ -19,21 +19,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* --- SCENE 1: CODE RAIN & LUV --- */
         #scene1 {
             position: absolute;
             width: 100%;
             height: 100%;
-            z-index: 2;
-            transition: opacity 2s ease-in-out;
+            z-index: 3;
+            transition: opacity 1.5s ease-in-out;
         }
-        canvas {
+        .canvas-layer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
-        
         #text-overlay {
             position: absolute;
             top: 50%;
@@ -48,11 +48,127 @@
             text-shadow: 0 0 15px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 105, 180, 0.4);
             font-family: Arial, sans-serif;
             pointer-events: none;
-            opacity: 1;
             transition: opacity 1.5s ease-in-out;
         }
 
+        /* --- SCENE 2: BOY, GIRL & CAKE ANIMATION --- */
         #scene2 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0d0d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .stage {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Characters Styles using Pure CSS Shapes */
+        .character {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .boy .head {
+            width: 40px; height: 40px; background: #ffdbac; border-radius: 50%; position: relative;
+        }
+        .boy .head::after {
+            content: "👦"; position: absolute; font-size: 30px; top: -2px; left: 3px;
+        }
+        .boy .body {
+            width: 50px; height: 70px; background: #2980b9; border-radius: 10px 10px 0 0; margin-top: 5px;
+        }
+        .boy .hand {
+            position: absolute; width: 12px; height: 45px; background: #2980b9;
+            border-radius: 5px; top: 45px; right: -10px;
+            transform-origin: top center;
+            animation: wave 1.5s infinite ease-in-out;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-110deg); }
+        }
+
+        .girl {
+            transition: transform 1s ease-in-out;
+        }
+        .girl .head {
+            width: 40px; height: 40px; background: #ffdbac; border-radius: 50%; position: relative;
+        }
+        .girl .head::after {
+            content: "👧"; position: absolute; font-size: 30px; top: -2px; left: 3px;
+        }
+        .girl .body {
+            width: 50px; height: 70px; background: #e74c3c; border-radius: 10px 10px 0 0; margin-top: 5px;
+        }
+
+        /* Cake & Candle Setup */
+        .cake-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: -5px;
+        }
+        .cake {
+            width: 70px; height: 45px; background: #f39c12; border-radius: 8px 8px 0 0;
+            position: relative; border-bottom: 8px solid #d35400;
+        }
+        .cake::before {
+            content: ""; position: absolute; width: 100%; height: 10px; background: #fff; top: 12px; left: 0;
+        }
+        .candle {
+            width: 6px; height: 22px; background: #ecf0f1; position: absolute; top: -22px; left: 32px;
+            border-radius: 2px;
+        }
+        .flame {
+            width: 10px; height: 15px; background: #f1c40f; position: absolute; top: -14px; left: -2px;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 10px #f39c12;
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1); } 100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        /* Animation Dialogs & Puff */
+        .bubble {
+            position: absolute; background: white; color: black; padding: 8px 15px;
+            border-radius: 15px; font-weight: bold; font-size: 0.9rem;
+            top: -45px; left: -20px; white-space: nowrap; opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .bubble::after {
+            content: ""; position: absolute; bottom: -8px; left: 30px;
+            border-width: 8px 8px 0; border-style: solid; border-color: white transparent;
+        }
+
+        .puff-effect {
+            position: absolute; color: #fff; font-weight: bold; font-size: 0.8rem;
+            top: -40px; right: 55px; opacity: 0; transform: scale(0.5);
+            background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;
+        }
+
+        /* --- SCENE 3: ROYAL LETTERS --- */
+        #scene3 {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -70,80 +186,75 @@
             background: #f4ecd8; 
             border-left: 15px solid #d4af37; 
             border-right: 15px solid #d4af37; 
-            box-shadow: 
-                0 0 20px rgba(0, 0, 0, 0.7), 
-                inset 0 0 30px rgba(139, 94, 26, 0.3); 
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(139, 94, 26, 0.3); 
             padding: 30px 20px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 85vh; 
-            overflow-y: auto; 
-            position: relative;
-            color: #2b1d0c; 
-            font-size: 1.05rem; 
-            line-height: 1.6;
-            text-align: center;
+            width: 100%; max-width: 500px; max-height: 85vh; 
+            overflow-y: auto; position: relative; color: #2b1d0c; 
+            font-size: 1.05rem; line-height: 1.6; text-align: center;
             font-family: 'SolaimanLipi', 'Kalpurush', 'Segoe UI', sans-serif;
             border-radius: 4px;
         }
 
-        .royal-scroll::before {
-            content: "";
-            position: absolute;
-            top: -6px; left: -20px; right: -20px;
-            height: 10px;
-            background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        .royal-scroll::before, .royal-scroll::after {
+            content: ""; position: absolute; left: -20px; right: -20px; height: 10px;
+            background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11); border-radius: 10px;
         }
+        .royal-scroll::before { top: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .royal-scroll::after { bottom: -6px; box-shadow: 0 -2px 4px rgba(0,0,0,0.4); }
 
-        .royal-scroll::after {
-            content: "";
-            position: absolute;
-            bottom: -6px; left: -20px; right: -20px;
-            height: 10px;
-            background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
-            border-radius: 10px;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.4);
-        }
-
-        .wish-text {
-            font-weight: 500;
-            white-space: pre-line;
-            text-shadow: 0px 1px 1px rgba(255,255,255,0.5);
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.2rem;
-            background-color: #2b1d0c;
-            animation: blink 0.8s infinite;
-            vertical-align: middle;
-            margin-left: 2px;
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        .wish-text { font-weight: 500; white-space: pre-line; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
+        .cursor { display: inline-block; width: 2px; height: 1.2rem; background-color: #2b1d0c; animation: blink 0.8s infinite; vertical-align: middle; margin-left: 2px; }
+        @keyframes blink { 50% { opacity: 0; } }
 
         @media (min-width: 768px) {
             #text-overlay { font-size: 4rem; letter-spacing: 5px; }
             .royal-scroll { font-size: 1.35rem; line-height: 1.8; max-width: 750px; padding: 40px 50px; border-left-width: 25px; border-right-width: 25px; }
-            .royal-scroll::before { top: -10px; left: -30px; right: -30px; height: 15px; }
-            .royal-scroll::after { bottom: -10px; left: -30px; right: -30px; height: 15px; }
+            .royal-scroll::before, .royal-scroll::after { left: -30px; right: -30px; height: 15px; }
+            .royal-scroll::before { top: -10px; } .royal-scroll::after { bottom: -10px; }
             .cursor { width: 3px; height: 1.4rem; }
+            .stage { max-width: 500px; scale: 1.3; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Scene 1: Matrix Rain & Rhombus Heart -->
     <div id="scene1">
-        <canvas id="matrixCanvas"></canvas>
-        <canvas id="particleCanvas"></canvas>
+        <canvas id="matrixCanvas" class="canvas-layer"></canvas>
+        <canvas id="particleCanvas" class="canvas-layer"></canvas>
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
+    <!-- Scene 2: Interactive Blowing Candle Scene -->
     <div id="scene2">
+        <div class="stage">
+            <!-- Boy Character -->
+            <div class="character boy">
+                <div class="bubble" id="boyBubble">Happy Birthday Juhi! 🎉</div>
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="hand"></div>
+            </div>
+
+            <!-- Birthday Cake Area -->
+            <div class="cake-container">
+                <div class="candle">
+                    <div class="flame" id="candleFlame"></div>
+                </div>
+                <div class="cake"></div>
+                <div class="puff-effect" id="puffText">*Puff!* 💨</div>
+            </div>
+
+            <!-- Girl Character -->
+            <div class="character girl" id="girlChar">
+                <div class="head"></div>
+                <div class="body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 3: Royal Scroll Presentation -->
+    <div id="scene3">
         <div class="royal-scroll">
             <span class="wish-text" id="typewriter"></span><span class="cursor" id="cursor"></span>
         </div>
@@ -161,37 +272,29 @@
         }
         resizeCanvases();
 
-        // --- MATRIX RAIN ---
+        // --- MATRIX CODE RAIN ---
         const katakana = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]+-*';
         const alphabet = katakana.split('');
         const fontSize = 14;
         let columns = mCanvas.width / fontSize;
         let rainDrops = [];
-
-        for (let x = 0; x < columns; x++) {
-            rainDrops[x] = 1;
-        }
+        for (let x = 0; x < columns; x++) { rainDrops[x] = 1; }
 
         function drawMatrix() {
             mCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
             mCtx.fillStyle = '#0F0'; 
             mCtx.font = fontSize + 'px monospace';
-
             for (let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet[Math.floor(Math.random() * alphabet.length)];
                 mCtx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-                if (rainDrops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
-                }
+                if (rainDrops[i] * fontSize > mCanvas.height && Math.random() > 0.975) { rainDrops[i] = 0; }
                 rainDrops[i]++;
             }
         }
         const matrixInterval = setInterval(drawMatrix, 30);
 
-
-        // --- SQUARE PARTICLES (HEART FILL LOGIC) ---
+        // --- RHOMBUS LUV PARTICLES ---
         const particles = [];
         const numParticles = 450; 
         let makeHeart = false;
@@ -199,27 +302,20 @@
         function getHeartTargets() {
             const targets = [];
             const scale = Math.min(pCanvas.width, pCanvas.height) / 35;
-            
             let count = 0;
             while (count < numParticles) {
                 const step = 35;
                 const rx = (Math.random() * 2 * step) - step; 
                 const ry = (Math.random() * 2 * step) - step;
-
                 const nx = rx / 16;
                 const ny = ry * 1.1 / 13; 
-                
                 if (Math.pow(nx*nx + ny*ny - 1, 3) - nx*nx * Math.pow(ny, 3) <= 0) {
-                    targets.push({
-                        x: pCanvas.width / 2 + rx * scale,
-                        y: pCanvas.height / 2 - ry * scale
-                    });
+                    targets.push({ x: pCanvas.width / 2 + rx * scale, y: pCanvas.height / 2 - ry * scale });
                     count++;
                 }
             }
             return targets;
         }
-
         let heartTargets = getHeartTargets();
 
         class Particle {
@@ -228,20 +324,17 @@
                 this.y = Math.random() * pCanvas.height;
                 this.targetX = targetX;
                 this.targetY = targetY;
-                this.size = Math.random() * 5 + 4; // Size of the square side
+                this.width = Math.random() * 6 + 5; 
+                this.height = this.width * 1.4;
                 this.speedX = (Math.random() - 0.5) * 5;
                 this.speedY = (Math.random() - 0.5) * 5;
                 this.alpha = Math.random() * 0.4 + 0.6;
                 this.rotation = Math.random() * Math.PI * 2; 
                 this.rotSpeed = (Math.random() - 0.5) * 0.1;
             }
-
             update() {
                 if (!makeHeart) {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.rotation += this.rotSpeed;
-
+                    this.x += this.speedX; this.y += this.speedY; this.rotation += this.rotSpeed;
                     if (this.x < 0 || this.x > pCanvas.width) this.speedX *= -1;
                     if (this.y < 0 || this.y > pCanvas.height) this.speedY *= -1;
                 } else {
@@ -250,67 +343,80 @@
                     this.rotation += (0 - this.rotation) * 0.07; 
                 }
             }
-
             draw() {
                 pCtx.save();
                 pCtx.globalAlpha = this.alpha;
-                pCtx.translate(this.x, this.y);
-                pCtx.rotate(this.rotation);
-                
-                pCtx.shadowBlur = 8;
-                pCtx.shadowColor = '#ff69b4';
-                pCtx.fillStyle = '#ff69b4';
-
-                // Drawing a perfect Square (Borgo) centered at particle position
-                pCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-                
+                pCtx.translate(this.x, this.y); pCtx.rotate(this.rotation);
+                pCtx.shadowBlur = 8; pCtx.shadowColor = '#ff69b4'; pCtx.fillStyle = '#ff69b4';
+                pCtx.beginPath();
+                pCtx.moveTo(0, -this.height / 2); pCtx.lineTo(this.width / 2, 0);
+                pCtx.lineTo(0, this.height / 2); pCtx.lineTo(-this.width / 2, 0);
+                pCtx.closePath(); pCtx.fill();
                 pCtx.restore();
             }
         }
 
-        // Init Particles
-        for (let i = 0; i < numParticles; i++) {
-            particles.push(new Particle(heartTargets[i].x, heartTargets[i].y));
-        }
-
+        for (let i = 0; i < numParticles; i++) { particles.push(new Particle(heartTargets[i].x, heartTargets[i].y)); }
         function animateParticles() {
             pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
 
-
-        // --- ANIMATION SEQUENCE ---
-        const textOverlay = document.getElementById('text-overlay');
+        // --- PAGES TIMELINE CONTROLLER ---
         const scene1 = document.getElementById('scene1');
         const scene2 = document.getElementById('scene2');
-        const typewriterElement = document.getElementById('typewriter');
-        const cursor = document.getElementById('cursor');
+        const scene3 = document.getElementById('scene3');
+        const textOverlay = document.getElementById('text-overlay');
 
-        setTimeout(() => {
-            textOverlay.style.opacity = '0';
-            makeHeart = true;
-        }, 3500);
+        // Timeline Action 1: Text Disappears, Rhombus Forms Heart
+        setTimeout(() => { textOverlay.style.opacity = '0'; makeHeart = true; }, 3500);
 
+        // Timeline Action 2: Transition from Heart Scene to Interaction Scene (Scene 2)
         setTimeout(() => {
             clearInterval(matrixInterval);
             scene1.style.opacity = '0';
-            
             setTimeout(() => {
                 scene1.style.display = 'none';
-                scene2.style.zIndex = '2';
-                scene2.style.opacity = '1';
-                
-                setTimeout(startTyping, 1000);
-            }, 2000);
-        }, 8000);
+                scene2.style.zIndex = '3'; scene2.style.opacity = '1';
+                runBirthdayInteraction(); // Trigger character sequences
+            }, 1500);
+        }, 7500);
 
+        // --- SCENE 2 INTERACTION TIMELINE ---
+        function runBirthdayInteraction() {
+            const boyBubble = document.getElementById('boyBubble');
+            const girlChar = document.getElementById('girlChar');
+            const candleFlame = document.getElementById('candleFlame');
+            const puffText = document.getElementById('puffText');
 
-        // --- TYPEWRITER ---
+            // Step A: Boy Waving & Dialog Appears
+            setTimeout(() => { boyBubble.style.opacity = '1'; }, 1000);
+
+            // Step B: Girl Steps Forward Towards Cake
+            setTimeout(() => { girlChar.style.transform = 'translateX(-30px)'; }, 2800);
+
+            // Step C: Girl Blows Candle (*Puff* displays, flame disappears)
+            setTimeout(() => {
+                puffText.style.opacity = '1';
+                puffText.style.transform = 'scale(1.2)';
+                puffText.style.transition = 'all 0.3s ease';
+                candleFlame.style.display = 'none'; // Candle Extinguished!
+            }, 4300);
+
+            // Step D: Transition onto Final Royal Scroll Scene
+            setTimeout(() => {
+                scene2.style.opacity = '0';
+                setTimeout(() => {
+                    scene2.style.display = 'none';
+                    scene3.style.zIndex = '3'; scene3.style.opacity = '1';
+                    setTimeout(startTyping, 1000); // Trigger letter typing
+                }, 1500);
+            }, 6500);
+        }
+
+        // --- SCENE 3 TYPEWRITER LOGIC ---
         const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
 কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
@@ -319,7 +425,10 @@
 
 একটি অবিস্মরণীয় জন্মদিন কাটুক তোমার! শুভ জন্মদিন! 🎂🎈`;
 
+        const typewriterElement = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
         let index = 0;
+
         function startTyping() {
             function type() {
                 if (index < message.length) {
@@ -333,18 +442,16 @@
             type();
         }
 
+        // Resize handler support
         window.addEventListener('resize', () => {
             resizeCanvases();
             columns = mCanvas.width / fontSize;
             if(mCanvas.width > rainDrops.length) {
-                for(let i = rainDrops.length; i < columns; i++) {
-                    rainDrops[i] = 1;
-                }
+                for(let i = rainDrops.length; i < columns; i++) { rainDrops[i] = 1; }
             }
             heartTargets = getHeartTargets();
             for (let i = 0; i < numParticles; i++) {
-                particles[i].targetX = heartTargets[i].x;
-                particles[i].targetY = heartTargets[i].y;
+                particles[i].targetX = heartTargets[i].x; particles[i].targetY = heartTargets[i].y;
             }
         });
     </script>
