@@ -51,12 +51,12 @@
             transition: opacity 1.5s ease-in-out;
         }
 
-        /* --- SCENE 2: REAL CHARACTER ANIMATION --- */
+        /* --- SCENE 2: ANIME CHARACTER INTERACTION --- */
         #scene2 {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #0b0c10;
+            background: linear-gradient(to bottom, #090a0f, #141622);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,141 +70,166 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 60px;
+            gap: 70px;
             position: relative;
             width: 100%;
             max-width: 500px;
-            height: 300px;
+            height: 320px;
         }
 
-        /* --- CHARACTER COMMON ANIMS --- */
+        /* --- ANIME CHARACTER BASE --- */
         .character {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            width: 100px;
-            height: 220px;
+            width: 120px;
+            height: 240px;
         }
-        .head {
-            width: 55px; height: 55px; background: #ffdbac; border-radius: 50%; position: relative;
-            box-shadow: inset -3px -3px 0 rgba(0,0,0,0.1);
+        .anime-head {
+            width: 60px; height: 60px; background: #ffe3d1; border-radius: 50% 50% 60% 60%; position: relative;
+            z-index: 2; box-shadow: inset -2px -4px 0 rgba(0,0,0,0.08);
         }
-        .eyes {
-            position: absolute; top: 24px; left: 12px; width: 32px; display: flex; justify-content: space-between;
+        
+        /* Anime Big Eyes */
+        .anime-eyes {
+            position: absolute; top: 26px; left: 10px; width: 40px; display: flex; justify-content: space-between;
         }
-        .eye {
-            width: 7px; height: 7px; background: #222; border-radius: 50%;
-            animation: blink 4s infinite;
+        .anime-eye {
+            width: 10px; height: 14px; background: #2c1a11; border-radius: 40% 40% 50% 50%;
+            position: relative; animation: animeBlink 4s infinite; transform-origin: center;
         }
-        @keyframes blink {
+        .anime-eye::before { /* Eye Highlight */
+            content: ""; position: absolute; top: 2px; left: 2px; width: 4px; height: 4px; background: #fff; border-radius: 50%;
+        }
+        @keyframes animeBlink {
             0%, 90%, 100% { transform: scaleY(1); }
             95% { transform: scaleY(0.1); }
         }
-        .mouth {
-            position: absolute; bottom: 10px; left: 24px; width: 8px; height: 4px;
-            border-bottom: 2px solid #222; border-radius: 0 0 4px 4px; transition: all 0.3s ease;
+        
+        .anime-mouth {
+            position: absolute; bottom: 10px; left: 26px; width: 8px; height: 4px;
+            border-bottom: 2px solid #5a3d28; border-radius: 0 0 4px 4px; transition: all 0.2s ease;
         }
 
-        /* --- BOY STYLING --- */
-        .boy .hair {
-            position: absolute; top: -5px; left: -2px; width: 60px; height: 25px;
-            background: #1a1a1a; border-radius: 20px 20px 5px 5px;
+        /* --- ANIME BOY (SPAIKY HAIR & HOODIE) --- */
+        .boy .anime-hair {
+            position: absolute; top: -10px; left: -5px; width: 70px; height: 40px; background: #2f3640;
+            clip-path: polygon(0% 60%, 15% 20%, 30% 35%, 45% 5%, 55% 25%, 70% 0%, 85% 35%, 100% 20%, 95% 75%, 75% 100%, 25% 100%);
+            border-radius: 10px 10px 0 0;
         }
-        .boy .body {
-            width: 65px; height: 110px; background: #2c3e50; border-radius: 15px 15px 0 0;
-            margin-top: 5px; position: relative; animation: breathe 3s infinite ease-in-out;
+        .boy .anime-body {
+            width: 70px; height: 120px; background: #4b7bec; border-radius: 20px 20px 5px 5px;
+            margin-top: -2px; position: relative; animation: animeBreathe 3.5s infinite ease-in-out;
         }
-        .boy .arm {
-            position: absolute; width: 16px; height: 70px; background: #34495e;
-            border-radius: 8px; top: 5px; right: -12px;
-            transform-origin: top center;
-            animation: waveArm 1.5s infinite ease-in-out;
+        .boy .anime-arm {
+            position: absolute; width: 18px; height: 75px; background: #3867d6;
+            border-radius: 10px; top: 8px; right: -12px; transform-origin: top center;
+            animation: animeWave 1.5s infinite ease-in-out;
         }
-        @keyframes waveArm {
+        @keyframes animeWave {
             0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-120deg); }
+            50% { transform: rotate(-115deg); }
         }
 
-        /* --- GIRL STYLING --- */
+        /* --- ANIME GIRL (KAWAII HAIR & DRESS) --- */
         .girl {
             transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: bottom center;
         }
-        .girl .hair {
-            position: absolute; top: -6px; left: -5px; width: 65px; height: 65px;
-            background: #4a2711; border-radius: 50% 50% 10px 10px; z-index: -1;
+        .girl .anime-hair-back {
+            position: absolute; top: -5px; left: -8px; width: 76px; height: 75px;
+            background: #ff7675; border-radius: 40% 40% 20% 20%; z-index: -1;
         }
-        .girl .hair-front {
-            position: absolute; top: -4px; left: -2px; width: 60px; height: 20px;
-            background: #4a2711; border-radius: 10px 10px 0 0;
+        .girl .anime-hair-front {
+            position: absolute; top: -8px; left: -4px; width: 68px; height: 32px; background: #ff7675;
+            clip-path: polygon(0% 80%, 20% 100%, 35% 75%, 50% 100%, 65% 75%, 80% 100%, 100% 75%, 90% 0%, 10% 0%);
+            border-radius: 15px 15px 0 0; z-index: 3;
         }
-        .girl .ponytail {
-            position: absolute; right: -15px; top: 15px; width: 25px; height: 45px;
-            background: #4a2711; border-radius: 0 20px 20px 20px; transform-origin: left top;
-            animation: sway 3s infinite ease-in-out;
+        .girl .side-tail {
+            position: absolute; right: -18px; top: 12px; width: 28px; height: 50px;
+            background: #ff7675; border-radius: 0 50% 50% 50%; transform-origin: left top;
+            animation: hairSway 3s infinite ease-in-out; z-index: 1;
         }
-        .girl .body {
-            width: 60px; height: 110px; background: #ff4757; border-radius: 15px 15px 0 0;
-            margin-top: 5px; position: relative; animation: breathe 3s infinite ease-in-out 0.5s;
+        .girl .anime-body {
+            width: 65px; height: 120px; background: #fd79a8; border-radius: 20px 20px 0 0;
+            margin-top: -2px; position: relative; animation: animeBreathe 3.5s infinite ease-in-out 0.5s;
+            clip-path: polygon(15% 0%, 85% 0%, 100% 40%, 85% 40%, 100% 100%, 0% 100%, 15% 40%, 0% 40%); /* Cute Dress Cut */
         }
-        @keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
-        @keyframes breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
+        .girl .blush {
+            position: absolute; width: 8px; height: 4px; background: rgba(255, 118, 117, 0.6);
+            border-radius: 50%; top: 38px;
+        }
+        .girl .blush.left { left: 8px; } .girl .blush.right { right: 8px; }
 
-        /* --- GIRL BLOWING ACTION STATE --- */
+        @keyframes hairSway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(18deg); } }
+        @keyframes animeBreathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.04); } }
+
+        /* --- LEAN AND PUFF STATE (ACTIVE) --- */
         .girl.lean-forward {
-            transform: translateX(-40px) rotate(-15deg);
+            transform: translateX(-45px) rotate(-18deg);
         }
-        .girl.lean-forward .mouth {
-            width: 8px; height: 8px; background: #222; border-radius: 50%; border: none; bottom: 8px;
+        .girl.lean-forward .anime-eye {
+            animation: none; height: 4px; border-radius: 0; background: transparent;
+            border-top: 3px solid #2c1a11; transform: scaleY(1);
+        }
+        .girl.lean-forward .anime-mouth {
+            width: 10px; height: 10px; background: #5a3d28; border-radius: 50%; border: none; bottom: 6px;
+        }
+        
+        /* Happy smile state after blowing */
+        .girl.happy-smile .anime-mouth {
+            width: 14px; height: 8px; border-bottom: 3px solid #5a3d28; border-radius: 0 0 10px 10px; background: transparent; border-top: none;
         }
 
-        /* --- CAKE & CANDLE --- */
+        /* --- ANIME CAKE DESIGN --- */
         .cake-container {
             display: flex; flex-direction: column; align-items: center; position: relative; z-index: 5;
         }
         .cake {
-            width: 90px; height: 55px; background: #6d4c41; border-radius: 12px 12px 0 0;
-            position: relative; border-bottom: 10px solid #4e342e;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            width: 95px; height: 60px; background: #fff0f5; border-radius: 12px 12px 0 0;
+            position: relative; border-bottom: 10px solid #e0aaff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-        .cake::before { /* Cream Layer */
-            content: ""; position: absolute; width: 100%; height: 12px; background: #fff; top: 15px; left: 0;
+        .cake::before { /* Strawberry Drip Effect */
+            content: ""; position: absolute; width: 100%; height: 16px; background: #ff7675; top: 0; left: 0;
+            border-radius: 12px 12px 0 0; clip-path: polygon(0 0, 100% 0, 100% 70%, 85% 100%, 70% 60%, 55% 95%, 40% 70%, 25% 100%, 10% 60%, 0 90%);
         }
-        .cake::after { /* Strawberries */
-            content: "🍓 🍓 🍓"; position: absolute; font-size: 11px; top: -14px; left: 14px;
+        .cake::after { /* Topping Cherries */
+            content: "🍒 🍒 🍒"; position: absolute; font-size: 12px; top: -14px; left: 14px;
         }
         .candle {
-            width: 8px; height: 30px; background: linear-gradient(to bottom, #e84118, #fbc531);
-            position: absolute; top: -30px; left: 41px; border-radius: 3px;
+            width: 8px; height: 32px; background: linear-gradient(to bottom, #00cec9, #81ecec);
+            position: absolute; top: -32px; left: 43px; border-radius: 3px;
         }
         .flame {
-            width: 12px; height: 18px; background: #ffaa00; position: absolute; top: -16px; left: -2px;
-            border-radius: 50% 50% 20% 20%; box-shadow: 0 0 15px #ff5500, 0 0 25px #ffaa00;
-            animation: flicker 0.15s infinite alternate; transform-origin: bottom center;
+            width: 12px; height: 20px; background: #ffbe76; position: absolute; top: -18px; left: -2px;
+            border-radius: 50% 50% 20% 20%; box-shadow: 0 0 15px #ff7675, 0 0 30px #ffbe76;
+            animation: animeFlicker 0.12s infinite alternate; transform-origin: bottom center;
         }
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); } 100% { transform: scale(1.15) rotate(3deg); }
+        @keyframes animeFlicker {
+            0% { transform: scale(1) rotate(-3deg); } 100% { transform: scale(1.18) rotate(4deg); }
         }
 
         /* --- SMOKE EFFECT --- */
         .smoke {
-            position: absolute; width: 4px; height: 4px; background: rgba(200,200,200,0.4);
+            position: absolute; width: 4px; height: 4px; background: rgba(230,230,230,0.5);
             border-radius: 50%; top: -15px; left: 2px; opacity: 0; pointer-events: none;
         }
         .smoke.active { animation: riseSmoke 1.5s ease-out forwards; }
         @keyframes riseSmoke {
-            0% { transform: translateY(0) scale(1); opacity: 0.6; filter: blur(1px); }
-            50% { transform: translateY(-30px) translateX(-10px) scale(3); opacity: 0.3; filter: blur(2px); }
-            100% { transform: translateY(-70px) translateX(-5px) scale(5); opacity: 0; filter: blur(4px); }
+            0% { transform: translateY(0) scale(1); opacity: 0.7; filter: blur(1px); }
+            50% { transform: translateY(-35px) translateX(-15px) scale(3.5); opacity: 0.4; filter: blur(2px); }
+            100% { transform: translateY(-80px) translateX(-8px) scale(6); opacity: 0; filter: blur(5px); }
         }
 
         /* Dialog Floating Bubble */
         .bubble {
             position: absolute; background: white; color: black; padding: 10px 18px;
             border-radius: 20px; font-weight: bold; font-size: 0.95rem;
-            top: -55px; left: -30px; white-space: nowrap; opacity: 0;
-            transition: opacity 0.5s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            top: -60px; left: -25px; white-space: nowrap; opacity: 0;
+            transition: opacity 0.5s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+            font-family: sans-serif;
         }
         .bubble::after {
             content: ""; position: absolute; bottom: -8px; left: 45px;
@@ -239,7 +264,7 @@
             .royal-scroll { font-size: 1.35rem; line-height: 1.8; max-width: 750px; padding: 40px 50px; border-left-width: 25px; border-right-width: 25px; }
             .royal-scroll::before, .royal-scroll::after { left: -30px; right: -30px; height: 15px; }
             .royal-scroll::before { top: -10px; } .royal-scroll::after { bottom: -10px; }
-            .stage { max-width: 600px; scale: 1.25; }
+            .stage { max-width: 600px; scale: 1.35; }
         }
     </style>
 </head>
@@ -252,19 +277,19 @@
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
-    <!-- Scene 2: Real Character Animated Blowing Candle Scene -->
+    <!-- Scene 2: Anime Interaction Zone -->
     <div id="scene2">
         <div class="stage">
-            <!-- Boy Character -->
+            <!-- Anime Boy Character -->
             <div class="character boy">
                 <div class="bubble" id="boyBubble">Happy Birthday Juhi! 🎉</div>
-                <div class="hair"></div>
-                <div class="head">
-                    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-                    <div class="mouth" style="border-radius: 50%; height: 6px; width: 10px;"></div>
+                <div class="anime-head">
+                    <div class="anime-hair"></div>
+                    <div class="anime-eyes"><div class="anime-eye"></div><div class="anime-eye"></div></div>
+                    <div class="anime-mouth" style="width: 10px; height: 6px; background: #5a3d28; border-radius: 50%; border: none;"></div>
                 </div>
-                <div class="body">
-                    <div class="arm"></div>
+                <div class="anime-body">
+                    <div class="anime-arm"></div>
                 </div>
             </div>
 
@@ -277,16 +302,17 @@
                 <div class="cake"></div>
             </div>
 
-            <!-- Girl Character -->
+            <!-- Anime Girl Character (Juhi) -->
             <div class="character girl" id="girlChar">
-                <div class="hair"></div>
-                <div class="head">
-                    <div class="hair-front"></div>
-                    <div class="ponytail"></div>
-                    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-                    <div class="mouth" id="girlMouth"></div>
+                <div class="anime-head">
+                    <div class="anime-hair-back"></div>
+                    <div class="anime-hair-front"></div>
+                    <div class="side-tail"></div>
+                    <div class="anime-eyes"><div class="anime-eye"></div><div class="anime-eye"></div></div>
+                    <div class="anime-mouth" id="girlMouth"></div>
+                    <div class="blush left"></div><div class="blush right"></div>
                 </div>
-                <div class="body"></div>
+                <div class="anime-body"></div>
             </div>
         </div>
     </div>
@@ -402,7 +428,7 @@
         }
         animateParticles();
 
-        // --- TIMELINE PAGE CONTROLLER ---
+        // --- SCENE CONTEXTS ---
         const scene1 = document.getElementById('scene1');
         const scene2 = document.getElementById('scene2');
         const scene3 = document.getElementById('scene3');
@@ -416,32 +442,36 @@
             setTimeout(() => {
                 scene1.style.display = 'none';
                 scene2.style.zIndex = '3'; scene2.style.opacity = '1';
-                runRealBirthdayInteraction(); 
+                runAnimeInteraction(); 
             }, 1500);
         }, 7500);
 
-        // --- SCENE 2: CINEMATIC INTERACTION LAW ---
-        function runRealBirthdayInteraction() {
+        // --- SCENE 2: ANIME STORY INTERACTION ---
+        function runAnimeInteraction() {
             const boyBubble = document.getElementById('boyBubble');
             const girlChar = document.getElementById('girlChar');
             const candleFlame = document.getElementById('candleFlame');
             const smokeCloud = document.getElementById('smokeCloud');
 
-            // Step 1: Boy waves hand and wishes
+            // 1. Boy wishes first
             setTimeout(() => { boyBubble.style.opacity = '1'; }, 1000);
 
-            // Step 2: Girl leans forward and prepares to blow
+            // 2. Girl bends down and changes face to puff mode
             setTimeout(() => { 
                 girlChar.classList.add('lean-forward'); 
-            }, 3000);
+            }, 3200);
 
-            // Step 3: Girl blows (*Puff action*), Candle flame turns off & Smoke triggers
+            // 3. Blow action! Flame disappears & smoke activates
             setTimeout(() => {
-                candleFlame.style.display = 'none'; // Put out fire
-                smokeCloud.classList.add('active'); // Start realistic smoke drift
-            }, 4400);
+                candleFlame.style.display = 'none'; 
+                smokeCloud.classList.add('active'); 
+                
+                // Girl smiles after successful blow
+                girlChar.classList.remove('lean-forward');
+                girlChar.classList.add('happy-smile');
+            }, 4700);
 
-            // Step 4: Shift to final Royal scroll text panel
+            // 4. Smooth fade out towards the royal scroll text panel
             setTimeout(() => {
                 scene2.style.opacity = '0';
                 setTimeout(() => {
@@ -449,10 +479,10 @@
                     scene3.style.zIndex = '3'; scene3.style.opacity = '1';
                     setTimeout(startTyping, 1000);
                 }, 1500);
-            }, 6800);
+            }, 7400);
         }
 
-        // --- SCENE 3: TEXT GENERATOR ---
+        // --- SCENE 3: TYPEWRITER TEXT ---
         const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
 কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
