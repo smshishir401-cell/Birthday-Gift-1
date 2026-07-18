@@ -51,7 +51,7 @@
             transition: opacity 1.5s ease-in-out;
         }
 
-        /* --- SCENE 2: 3D CHARACTER ANIMATION --- */
+        /* --- SCENE 2: 3D FULL-BODY ANIMATION --- */
         #scene2 {
             position: absolute;
             width: 100%;
@@ -64,7 +64,7 @@
             opacity: 0;
             z-index: 1;
             transition: opacity 1.5s ease-in-out;
-            perspective: 800px; /* Provides 3D environment depth */
+            perspective: 800px;
         }
 
         .stage {
@@ -75,138 +75,165 @@
             position: relative;
             width: 100%;
             max-width: 500px;
-            height: 340px;
+            height: 380px;
             transform-style: preserve-3d;
         }
 
-        /* --- 3D CHARACTER SHADING BASE --- */
+        /* --- 3D CHARACTER BASE --- */
         .character {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             width: 120px;
-            height: 260px;
+            height: 300px;
             transform-style: preserve-3d;
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        /* 3D Rendered Head (Using complex radial-gradients for volume) */
         .d3-head {
             width: 65px; height: 65px; 
             background: radial-gradient(circle at 30% 30%, #ffedd5 0%, #fdba74 70%, #df8c46 100%);
-            border-radius: 50%; position: relative; z-index: 4;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset -3px -5px 10px rgba(0,0,0,0.15);
+            border-radius: 50%; position: relative; z-index: 5;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2), inset -3px -5px 10px rgba(0,0,0,0.15);
         }
         
-        /* 3D High-Gloss Eyes */
         .d3-eyes {
-            position: absolute; top: 26px; left: 12px; width: 42px; display: flex; justify-content: space-between; z-index: 5;
+            position: absolute; top: 26px; left: 12px; width: 42px; display: flex; justify-content: space-between; z-index: 6;
         }
         .d3-eye {
             width: 11px; height: 16px; 
             background: linear-gradient(135deg, #1e1b4b 0%, #311005 60%, #000000 100%);
             border-radius: 50%; position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
             animation: d3Blink 4s infinite; transform-origin: center;
         }
-        .d3-eye::before { /* Bright Gloss Specular Highlight */
-            content: ""; position: absolute; top: 2px; left: 2px; width: 4px; height: 5px; background: #fff; border-radius: 50%;
-        }
-        .d3-eye::after { /* Sub-Highlight */
-            content: ""; position: absolute; bottom: 2px; right: 2px; width: 2px; height: 2px; background: rgba(255,255,255,0.4); border-radius: 50%;
-        }
+        .d3-eye::before { content: ""; position: absolute; top: 2px; left: 2px; width: 4px; height: 5px; background: #fff; border-radius: 50%; }
+        
         @keyframes d3Blink {
             0%, 90%, 100% { transform: scaleY(1); }
             95% { transform: scaleY(0.05); }
         }
         
         .d3-mouth {
-            position: absolute; bottom: 12px; left: 28px; width: 10px; height: 5px; z-index: 5;
+            position: absolute; bottom: 12px; left: 28px; width: 10px; height: 5px; z-index: 6;
             border-bottom: 3px solid #4a1d00; border-radius: 0 0 6px 6px; transition: all 0.25s ease;
         }
 
-        /* --- 3D BOY HOODIE MESH --- */
+        /* --- 3D LIMBS & ANATOMY DESIGN --- */
+        .d3-body {
+            position: relative; z-index: 4;
+            transform-style: preserve-3d;
+        }
+        .d3-limb-container {
+            display: flex; justify-content: space-around; width: 100%; position: absolute; transform-style: preserve-3d;
+        }
+        .d3-arm-pair { top: 5px; z-index: 3; }
+        .d3-leg-pair { bottom: -65px; z-index: 2; width: 55px; }
+
+        .d3-arm {
+            width: 14px; height: 75px; border-radius: 8px; transform-origin: top center;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.25);
+        }
+        .d3-leg {
+            width: 16px; height: 70px; transform-origin: top center;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .d3-shoe {
+            position: absolute; bottom: -8px; left: -2px; width: 22px; height: 12px;
+            border-radius: 8px 12px 4px 4px;
+        }
+
+        /* --- 3D BOY STYLE --- */
         .boy .d3-hair {
             position: absolute; top: -8px; left: -2px; width: 70px; height: 42px; 
             background: linear-gradient(to bottom, #374151, #111827);
-            border-radius: 30px 30px 10px 10px; z-index: 4;
-            box-shadow: 0 5px 8px rgba(0,0,0,0.4);
+            border-radius: 30px 30px 10px 10px; z-index: 5;
         }
         .boy .d3-body {
-            width: 75px; height: 130px; 
+            width: 70px; height: 110px; 
             background: linear-gradient(to right, #1d4ed8 0%, #3b82f6 30%, #1e40af 70%, #172554 100%);
-            border-radius: 25px 25px 10px 10px; margin-top: -5px; position: relative;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+            border-radius: 20px 20px 8px 8px; margin-top: -4px;
             animation: d3Breathe 3.2s infinite ease-in-out;
         }
-        .boy .d3-arm {
-            position: absolute; width: 20px; height: 80px; 
+        /* Boy Left Arm In Pocket, Right Arm Waving */
+        .boy .d3-arm.left {
+            background: #1e3a8a; transform: rotate(15deg);
+        }
+        .boy .d3-arm.right {
             background: linear-gradient(to bottom, #2563eb, #1e3a8a);
-            border-radius: 10px; top: 10px; right: -14px; transform-origin: top center;
-            box-shadow: 3px 5px 10px rgba(0,0,0,0.3);
             animation: d3Wave 1.4s infinite ease-in-out;
         }
+        .boy .d3-leg {
+            background: linear-gradient(to bottom, #1f2937, #111827); /* Jeans */
+            border-radius: 4px;
+        }
+        .boy .d3-shoe { background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+
         @keyframes d3Wave {
-            0%, 100% { transform: rotate(0deg) translateZ(10px); }
-            50% { transform: rotate(-120deg) translateZ(15px); }
+            0%, 100% { transform: rotate(0deg) translateZ(5px); }
+            50% { transform: rotate(-115deg) translateZ(12px); }
         }
 
-        /* --- 3D GIRL STYLED DRESS & LAYERED HAIR --- */
-        .girl {
-            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: bottom center;
-        }
+        /* --- 3D GIRL STYLE --- */
         .girl .d3-hair-back {
             position: absolute; top: -3px; left: -6px; width: 78px; height: 80px;
             background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
             border-radius: 50% 50% 30px 30px; z-index: 2;
-            box-shadow: inset 0 -10px 15px rgba(0,0,0,0.3);
         }
         .girl .d3-hair-front {
             position: absolute; top: -6px; left: -2px; width: 70px; height: 35px; 
             background: linear-gradient(to bottom, #ef4444, #b91c1c);
             border-radius: 20px 20px 5px 5px; z-index: 5;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.25);
         }
         .girl .d3-ponytail {
             position: absolute; right: -22px; top: 15px; width: 32px; height: 60px;
             background: linear-gradient(to bottom, #b91c1c, #7f1d1d);
             border-radius: 0 50% 50% 50%; transform-origin: left top;
             animation: d3HairSway 3s infinite ease-in-out; z-index: 3;
-            box-shadow: 3px 5px 10px rgba(0,0,0,0.3);
         }
         .girl .d3-body {
-            width: 70px; height: 130px; 
+            width: 65px; height: 110px; 
             background: linear-gradient(to right, #db2777 0%, #f472b6 35%, #be185d 75%, #9d174d 100%);
-            border-radius: 25px 25px 35px 35px; margin-top: -5px; position: relative;
+            border-radius: 20px 20px 25px 25px; margin-top: -4px;
             animation: d3Breathe 3.2s infinite ease-in-out 0.4s;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
         }
         .girl .d3-blush {
             position: absolute; width: 10px; height: 5px; background: rgba(239, 68, 68, 0.45);
             border-radius: 50%; top: 40px; filter: blur(1px);
         }
         .girl .d3-blush.left { left: 8px; } .girl .d3-blush.right { right: 8px; }
+        
+        .girl .d3-arm {
+            background: radial-gradient(circle at top, #ffedd5, #fdba74); 
+            transition: transform 1s ease;
+        }
+        .girl .d3-leg {
+            background: radial-gradient(linear, #ffedd5, #fdba74); /* Anime Legs skin tone */
+            background: #fcd34d; /* Dynamic dress tights look */
+            border-radius: 8px;
+        }
+        .girl .d3-shoe { background: #be185d; border-radius: 10px 10px 4px 4px; }
 
-        @keyframes d3HairSway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
-        @keyframes d3Breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03) scaleX(1.01); } }
+        @keyframes d3HairSway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(12deg); } }
+        @keyframes d3Breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
 
-        /* --- 3D LEAN & BLOW PHYSICAL STATES --- */
+        /* --- ACTIVE EXTENSION STATE (THE BLOW MOVEMENT) --- */
         .girl.lean-forward {
-            transform: translateX(-45px) translateY(-5px) rotate(-22deg) rotateY(-10deg);
+            transform: translateX(-40px) translateY(-15px) rotate(-20deg);
         }
         .girl.lean-forward .d3-eye {
             animation: none; height: 4px; border-radius: 0; background: transparent;
-            border-top: 4px solid #4a1d00; box-shadow: none;
+            border-top: 4px solid #4a1d00;
         }
         .girl.lean-forward .d3-mouth {
-            width: 12px; height: 12px; 
-            background: radial-gradient(circle, #541c00 30%, #270b00 100%);
+            width: 12px; height: 12px; background: radial-gradient(circle, #541c00 30%, #270b00 100%);
             border-radius: 50%; border: none; bottom: 6px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }
+        /* Arms move back dynamically when leaning forward to blow */
+        .girl.lean-forward .d3-arm.left { transform: rotate(45deg) translateZ(-5px); }
+        .girl.lean-forward .d3-arm.right { transform: rotate(-45deg) translateZ(-5px); }
         
-        /* Smooth smile after animation */
         .girl.happy-smile .d3-mouth {
             width: 16px; height: 9px; border-bottom: 4px solid #4a1d00; border-radius: 0 0 12px 12px; background: transparent; border-top: none;
         }
@@ -214,40 +241,33 @@
         /* --- 3D CYLINDRICAL CAKE MESH --- */
         .cake-container {
             display: flex; flex-direction: column; align-items: center; position: relative; z-index: 6;
-            transform: translateZ(20px);
+            transform: translateZ(20px); margin-bottom: 25px;
         }
         .cake {
             width: 105px; height: 65px; 
             background: linear-gradient(to right, #fdf2f8 0%, #fff 40%, #fbcfe8 75%, #f472b6 100%);
             border-radius: 15px 15px 0 0; position: relative; border-bottom: 12px solid #db2777;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 5px 10px rgba(255,255,255,0.8);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
-        .cake::before { /* 3D Drip Cream Shader */
+        .cake::before {
             content: ""; position: absolute; width: 100%; height: 20px; 
             background: linear-gradient(to bottom, #ef4444, #dc2626); top: 0; left: 0;
             border-radius: 15px 15px 0 0; clip-path: polygon(0 0, 100% 0, 100% 65%, 88% 95%, 75% 60%, 60% 100%, 45% 70%, 30% 95%, 15% 55%, 0 85%);
         }
-        .cake::after { /* Realistic Strawberries toppings */
-            content: "🍓  🍓  🍓"; position: absolute; font-size: 13px; top: -16px; left: 16px;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.3);
-        }
+        .cake::after { content: "🍓  🍓  🍓"; position: absolute; font-size: 13px; top: -16px; left: 16px; }
+        
         .candle {
             width: 10px; height: 35px; 
             background: linear-gradient(to right, #06b6d4, #22d3ee, #0891b2);
             position: absolute; top: -35px; left: 47px; border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         .flame {
             width: 14px; height: 22px; background: #fbbf24; position: absolute; top: -20px; left: -2px;
-            border-radius: 50% 50% 20% 20%; 
-            box-shadow: 0 0 20px #ef4444, 0 0 40px #f59e0b, 0 0 60px #fff;
+            border-radius: 50% 50% 20% 20%; box-shadow: 0 0 20px #ef4444, 0 0 40px #f59e0b, 0 0 60px #fff;
             animation: d3Flicker 0.1s infinite alternate; transform-origin: bottom center;
         }
-        @keyframes d3Flicker {
-            0% { transform: scale(1) rotate(-4deg); } 100% { transform: scale(1.2) rotate(5deg); }
-        }
+        @keyframes d3Flicker { 0% { transform: scale(1) rotate(-4deg); } 100% { transform: scale(1.2) rotate(5deg); } }
 
-        /* --- 3D RISING SMOKE VOLUMES --- */
         .smoke {
             position: absolute; width: 6px; height: 6px; background: rgba(243,244,246,0.6);
             border-radius: 50%; top: -18px; left: 2px; opacity: 0; pointer-events: none;
@@ -259,19 +279,14 @@
             100% { transform: translateY(-90px) translateX(-10px) scale(7); opacity: 0; filter: blur(6px); }
         }
 
-        /* 3D Dynamic Floating Speech Bubble */
         .bubble {
             position: absolute; background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%); 
             color: #1f2937; padding: 12px 20px; border-radius: 25px; font-weight: bold; font-size: 1rem;
             top: -65px; left: -20px; white-space: nowrap; opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.8);
+            transition: opacity 0.5s ease;
         }
-        .bubble::after {
-            content: ""; position: absolute; bottom: -10px; left: 45px;
-            border-width: 10px 10px 0; border-style: solid; border-color: #f3f4f6 transparent;
-        }
+        .bubble::after { content: ""; position: absolute; bottom: -10px; left: 45px; border-width: 10px 10px 0; border-style: solid; border-color: #f3f4f6 transparent; }
 
         /* --- SCENE 3: ROYAL LETTERS --- */
         #scene3 {
@@ -301,7 +316,7 @@
             .royal-scroll { font-size: 1.35rem; line-height: 1.8; max-width: 750px; padding: 40px 50px; border-left-width: 25px; border-right-width: 25px; }
             .royal-scroll::before, .royal-scroll::after { left: -30px; right: -30px; height: 15px; }
             .royal-scroll::before { top: -10px; } .royal-scroll::after { bottom: -10px; }
-            .stage { max-width: 600px; scale: 1.4; }
+            .stage { max-width: 600px; scale: 1.3; }
         }
     </style>
 </head>
@@ -314,7 +329,7 @@
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
-    <!-- Scene 2: 3D Render Shaded Interaction Zone -->
+    <!-- Scene 2: 3D Full-Body Mesh Interaction Zone -->
     <div id="scene2">
         <div class="stage">
             <!-- 3D Boy Mesh Object -->
@@ -326,11 +341,18 @@
                     <div class="d3-mouth" style="width: 12px; height: 6px; background: #4a1d00; border-radius: 50%; border: none;"></div>
                 </div>
                 <div class="d3-body">
-                    <div class="d3-arm"></div>
+                    <div class="d3-arm-pair d3-limb-container">
+                        <div class="d3-arm left"></div>
+                        <div class="d3-arm right"></div>
+                    </div>
+                    <div class="d3-leg-pair d3-limb-container">
+                        <div class="d3-leg left"><div class="d3-shoe"></div></div>
+                        <div class="d3-leg right"><div class="d3-shoe"></div></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 3D Cake Node Mesh -->
+            <!-- 3D Cake Design -->
             <div class="cake-container">
                 <div class="candle">
                     <div class="flame" id="candleFlame"></div>
@@ -349,7 +371,16 @@
                     <div class="d3-mouth" id="girlMouth"></div>
                     <div class="d3-blush left"></div><div class="d3-blush right"></div>
                 </div>
-                <div class="d3-body"></div>
+                <div class="d3-body">
+                    <div class="d3-arm-pair d3-limb-container">
+                        <div class="d3-arm left"></div>
+                        <div class="d3-arm right"></div>
+                    </div>
+                    <div class="d3-leg-pair d3-limb-container">
+                        <div class="d3-leg left"><div class="d3-shoe"></div></div>
+                        <div class="d3-leg right"><div class="d3-shoe"></div></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -479,36 +510,36 @@
             setTimeout(() => {
                 scene1.style.display = 'none';
                 scene2.style.zIndex = '3'; scene2.style.opacity = '1';
-                run3DInteraction(); 
+                run3DFullBodyInteraction(); 
             }, 1500);
         }, 7500);
 
-        // --- SCENE 2: 3D ANIMATION ENGINE SEQUENCE ---
-        function run3DInteraction() {
+        // --- SCENE 2: ANIMATION TIMELINE ---
+        function run3DFullBodyInteraction() {
             const boyBubble = document.getElementById('boyBubble');
             const girlChar = document.getElementById('girlChar');
             const candleFlame = document.getElementById('candleFlame');
             const smokeCloud = document.getElementById('smokeCloud');
 
-            // 1. 3D Boy text box triggers
+            // 1. Boy text box triggers
             setTimeout(() => { boyBubble.style.opacity = '1'; }, 1000);
 
-            // 2. 3D Girl physical matrix rotation & morph mouth
+            // 2. Girl leans forward with full dynamic anatomy mechanics
             setTimeout(() => { 
                 girlChar.classList.add('lean-forward'); 
             }, 3200);
 
-            // 3. Extinguish core flame & throw 3D volumetric smoke particles
+            // 3. Flame off & smoke releases
             setTimeout(() => {
                 candleFlame.style.display = 'none'; 
                 smokeCloud.classList.add('active'); 
                 
-                // Girl switches onto absolute smile morph
+                // Girl stands up and smiles happily
                 girlChar.classList.remove('lean-forward');
                 girlChar.classList.add('happy-smile');
             }, 4700);
 
-            // 4. Smooth 3D scene warp into the final parchment letter frame
+            // 4. Smooth scene warp into the scroll
             setTimeout(() => {
                 scene2.style.opacity = '0';
                 setTimeout(() => {
@@ -519,7 +550,7 @@
             }, 7500);
         }
 
-        // --- SCENE 3: LETTER MATRIX ---
+        // --- SCENE 3: TYPEWRITER WISH ---
         const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
 কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
