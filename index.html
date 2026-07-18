@@ -54,12 +54,12 @@
             100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
         }
 
-        /* Scene 2: Black Page & Golden Decorated Paper */
+        /* Scene 2: Black Page & Royal King's Scroll Paper */
         #scene2 {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #0d0d0d;
+            background-color: #080808;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -69,42 +69,63 @@
             padding: 20px;
         }
 
-        .golden-paper {
-            background: #1a1a1a;
-            border: 5px double #d4af37; /* Golden Border */
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.2);
-            padding: 40px;
-            max-width: 700px;
+        /* Royal Vintage Scroll Design (রাজা-বাদশাহদের পত্রের মতো ডিজাইন) */
+        .royal-scroll {
+            background: #f4ecd8; /* Vintage parchment paper color */
+            border-left: 25px solid #d4af37; /* Royal Golden Scroll Roll Left */
+            border-right: 25px solid #d4af37; /* Royal Golden Scroll Roll Right */
+            box-shadow: 
+                0 0 30px rgba(0, 0, 0, 0.7), 
+                inset 0 0 40px rgba(139, 94, 26, 0.3); /* Aged paper effect */
+            padding: 40px 50px;
+            max-width: 750px;
             width: 100%;
-            border-radius: 10px;
+            min-height: 450px;
             position: relative;
-            color: #f3e5ab; /* Soft Gold Text */
-            font-size: 1.25rem;
+            color: #2b1d0c; /* Deep vintage brown text for high contract and readability */
+            font-size: 1.35rem;
             line-height: 1.8;
             text-align: center;
+            font-family: 'SolaimanLipi', 'Kalpurush', 'Segoe UI', sans-serif;
+            border-radius: 4px;
         }
 
-        /* Decorative Corners */
-        .golden-paper::before, .golden-paper::after {
-            content: "✦";
+        /* Top and Bottom Scroll Wooden/Gold Bar Ends (রাজকীয় পত্রের দুই পাশের লাঠি বা রোল ডিজাইন) */
+        .royal-scroll::before {
+            content: "";
             position: absolute;
-            color: #d4af37;
-            font-size: 1.5rem;
+            top: -10px; left: -30px; right: -30px;
+            height: 15px;
+            background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
-        .golden-paper::before { top: 10px; left: 15px; }
-        .golden-paper::after { bottom: 10px; right: 15px; }
+
+        .royal-scroll::after {
+            content: "";
+            position: absolute;
+            bottom: -10px; left: -30px; right: -30px;
+            height: 15px;
+            background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11);
+            border-radius: 10px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+        }
 
         .wish-text {
-            min-height: 200px;
+            font-weight: 500;
             white-space: pre-line;
+            text-shadow: 0px 1px 1px rgba(255,255,255,0.5);
         }
 
-        /* Cursor Effect */
+        /* Vintage Cursor Effect */
         .cursor {
             display: inline-block;
-            width: 10px;
-            background-color: #d4af37;
+            width: 3px;
+            height: 1.4rem;
+            background-color: #2b1d0c;
             animation: blink 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
         }
         @keyframes blink {
             50% { opacity: 0; }
@@ -113,16 +134,16 @@
 </head>
 <body>
 
-    <!-- Scene 1 -->
+    <!-- Scene 1: Code Rain & Juhi Text -->
     <div id="scene1">
         <canvas id="matrixCanvas"></canvas>
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
-    <!-- Scene 2 -->
+    <!-- Scene 2: Royal Scroll Paper on Black Screen (No Logos) -->
     <div id="scene2">
-        <div class="golden-paper">
-            <div class="wish-text" id="typewriter"></div><span class="cursor" id="cursor">|</span>
+        <div class="royal-scroll">
+            <span class="wish-text" id="typewriter"></span><span class="cursor" id="cursor"></span>
         </div>
     </div>
 
@@ -150,7 +171,7 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#0F0'; // Green code rain text
+            ctx.fillStyle = '#0F0'; 
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < rainDrops.length; i++) {
@@ -180,7 +201,7 @@
         const typewriterElement = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
 
-        // 6 সেকেন্ড পর প্রথম সিন চলে যাবে এবং ২য় সিন আসবে (6000ms)
+        // প্রথম সিন ৬ সেকেন্ড থাকবে, তারপর দ্বিতীয় সিন রাজকীয় পত্র নিয়ে আসবে
         setTimeout(() => {
             clearInterval(matrixInterval);
             scene1.style.opacity = '0';
@@ -201,9 +222,9 @@
                 if (index < message.length) {
                     typewriterElement.textContent += message.charAt(index);
                     index++;
-                    setTimeout(type, 50); // টাইপিং স্পিড (মিলিসেকেন্ডে)
+                    setTimeout(type, 50); // টাইপিং স্পিড
                 } else {
-                    cursor.style.display = 'none'; // টাইপিং শেষ হলে কার্সার চলে যাবে
+                    cursor.style.display = 'none'; // টাইপিং শেষে কার্সার হাইড হবে
                 }
             }
             type();
