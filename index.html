@@ -51,12 +51,12 @@
             transition: opacity 1.5s ease-in-out;
         }
 
-        /* --- SCENE 2: BOY, GIRL & CAKE ANIMATION --- */
+        /* --- SCENE 2: REAL CHARACTER ANIMATION --- */
         #scene2 {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #0d0d0d;
+            background-color: #0b0c10;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,131 +70,160 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
+            gap: 60px;
             position: relative;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            height: 300px;
         }
 
-        /* Characters Styles using Pure CSS Shapes */
+        /* --- CHARACTER COMMON ANIMS --- */
         .character {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
+            width: 100px;
+            height: 220px;
+        }
+        .head {
+            width: 55px; height: 55px; background: #ffdbac; border-radius: 50%; position: relative;
+            box-shadow: inset -3px -3px 0 rgba(0,0,0,0.1);
+        }
+        .eyes {
+            position: absolute; top: 24px; left: 12px; width: 32px; display: flex; justify-content: space-between;
+        }
+        .eye {
+            width: 7px; height: 7px; background: #222; border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .mouth {
+            position: absolute; bottom: 10px; left: 24px; width: 8px; height: 4px;
+            border-bottom: 2px solid #222; border-radius: 0 0 4px 4px; transition: all 0.3s ease;
         }
 
-        .boy .head {
-            width: 40px; height: 40px; background: #ffdbac; border-radius: 50%; position: relative;
-        }
-        .boy .head::after {
-            content: "👦"; position: absolute; font-size: 30px; top: -2px; left: 3px;
+        /* --- BOY STYLING --- */
+        .boy .hair {
+            position: absolute; top: -5px; left: -2px; width: 60px; height: 25px;
+            background: #1a1a1a; border-radius: 20px 20px 5px 5px;
         }
         .boy .body {
-            width: 50px; height: 70px; background: #2980b9; border-radius: 10px 10px 0 0; margin-top: 5px;
+            width: 65px; height: 110px; background: #2c3e50; border-radius: 15px 15px 0 0;
+            margin-top: 5px; position: relative; animation: breathe 3s infinite ease-in-out;
         }
-        .boy .hand {
-            position: absolute; width: 12px; height: 45px; background: #2980b9;
-            border-radius: 5px; top: 45px; right: -10px;
+        .boy .arm {
+            position: absolute; width: 16px; height: 70px; background: #34495e;
+            border-radius: 8px; top: 5px; right: -12px;
             transform-origin: top center;
-            animation: wave 1.5s infinite ease-in-out;
+            animation: waveArm 1.5s infinite ease-in-out;
         }
-
-        @keyframes wave {
+        @keyframes waveArm {
             0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-110deg); }
+            50% { transform: rotate(-120deg); }
         }
 
+        /* --- GIRL STYLING --- */
         .girl {
-            transition: transform 1s ease-in-out;
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: bottom center;
         }
-        .girl .head {
-            width: 40px; height: 40px; background: #ffdbac; border-radius: 50%; position: relative;
+        .girl .hair {
+            position: absolute; top: -6px; left: -5px; width: 65px; height: 65px;
+            background: #4a2711; border-radius: 50% 50% 10px 10px; z-index: -1;
         }
-        .girl .head::after {
-            content: "👧"; position: absolute; font-size: 30px; top: -2px; left: 3px;
+        .girl .hair-front {
+            position: absolute; top: -4px; left: -2px; width: 60px; height: 20px;
+            background: #4a2711; border-radius: 10px 10px 0 0;
+        }
+        .girl .ponytail {
+            position: absolute; right: -15px; top: 15px; width: 25px; height: 45px;
+            background: #4a2711; border-radius: 0 20px 20px 20px; transform-origin: left top;
+            animation: sway 3s infinite ease-in-out;
         }
         .girl .body {
-            width: 50px; height: 70px; background: #e74c3c; border-radius: 10px 10px 0 0; margin-top: 5px;
+            width: 60px; height: 110px; background: #ff4757; border-radius: 15px 15px 0 0;
+            margin-top: 5px; position: relative; animation: breathe 3s infinite ease-in-out 0.5s;
+        }
+        @keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+        @keyframes breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
+
+        /* --- GIRL BLOWING ACTION STATE --- */
+        .girl.lean-forward {
+            transform: translateX(-40px) rotate(-15deg);
+        }
+        .girl.lean-forward .mouth {
+            width: 8px; height: 8px; background: #222; border-radius: 50%; border: none; bottom: 8px;
         }
 
-        /* Cake & Candle Setup */
+        /* --- CAKE & CANDLE --- */
         .cake-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            margin-bottom: -5px;
+            display: flex; flex-direction: column; align-items: center; position: relative; z-index: 5;
         }
         .cake {
-            width: 70px; height: 45px; background: #f39c12; border-radius: 8px 8px 0 0;
-            position: relative; border-bottom: 8px solid #d35400;
+            width: 90px; height: 55px; background: #6d4c41; border-radius: 12px 12px 0 0;
+            position: relative; border-bottom: 10px solid #4e342e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        .cake::before {
-            content: ""; position: absolute; width: 100%; height: 10px; background: #fff; top: 12px; left: 0;
+        .cake::before { /* Cream Layer */
+            content: ""; position: absolute; width: 100%; height: 12px; background: #fff; top: 15px; left: 0;
+        }
+        .cake::after { /* Strawberries */
+            content: "🍓 🍓 🍓"; position: absolute; font-size: 11px; top: -14px; left: 14px;
         }
         .candle {
-            width: 6px; height: 22px; background: #ecf0f1; position: absolute; top: -22px; left: 32px;
-            border-radius: 2px;
+            width: 8px; height: 30px; background: linear-gradient(to bottom, #e84118, #fbc531);
+            position: absolute; top: -30px; left: 41px; border-radius: 3px;
         }
         .flame {
-            width: 10px; height: 15px; background: #f1c40f; position: absolute; top: -14px; left: -2px;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px #f39c12;
-            animation: flicker 0.1s infinite alternate;
+            width: 12px; height: 18px; background: #ffaa00; position: absolute; top: -16px; left: -2px;
+            border-radius: 50% 50% 20% 20%; box-shadow: 0 0 15px #ff5500, 0 0 25px #ffaa00;
+            animation: flicker 0.15s infinite alternate; transform-origin: bottom center;
         }
         @keyframes flicker {
-            0% { transform: scale(1); } 100% { transform: scale(1.1) rotate(2deg); }
+            0% { transform: scale(1) rotate(-2deg); } 100% { transform: scale(1.15) rotate(3deg); }
         }
 
-        /* Animation Dialogs & Puff */
+        /* --- SMOKE EFFECT --- */
+        .smoke {
+            position: absolute; width: 4px; height: 4px; background: rgba(200,200,200,0.4);
+            border-radius: 50%; top: -15px; left: 2px; opacity: 0; pointer-events: none;
+        }
+        .smoke.active { animation: riseSmoke 1.5s ease-out forwards; }
+        @keyframes riseSmoke {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; filter: blur(1px); }
+            50% { transform: translateY(-30px) translateX(-10px) scale(3); opacity: 0.3; filter: blur(2px); }
+            100% { transform: translateY(-70px) translateX(-5px) scale(5); opacity: 0; filter: blur(4px); }
+        }
+
+        /* Dialog Floating Bubble */
         .bubble {
-            position: absolute; background: white; color: black; padding: 8px 15px;
-            border-radius: 15px; font-weight: bold; font-size: 0.9rem;
-            top: -45px; left: -20px; white-space: nowrap; opacity: 0;
-            transition: opacity 0.5s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: absolute; background: white; color: black; padding: 10px 18px;
+            border-radius: 20px; font-weight: bold; font-size: 0.95rem;
+            top: -55px; left: -30px; white-space: nowrap; opacity: 0;
+            transition: opacity 0.5s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
         .bubble::after {
-            content: ""; position: absolute; bottom: -8px; left: 30px;
+            content: ""; position: absolute; bottom: -8px; left: 45px;
             border-width: 8px 8px 0; border-style: solid; border-color: white transparent;
-        }
-
-        .puff-effect {
-            position: absolute; color: #fff; font-weight: bold; font-size: 0.8rem;
-            top: -40px; right: 55px; opacity: 0; transform: scale(0.5);
-            background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;
         }
 
         /* --- SCENE 3: ROYAL LETTERS --- */
         #scene3 {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #080808;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            z-index: 1;
-            transition: opacity 2s ease-in-out;
-            padding: 15px;
+            position: absolute; width: 100%; height: 100%; background-color: #080808;
+            display: flex; justify-content: center; align-items: center; opacity: 0;
+            z-index: 1; transition: opacity 2s ease-in-out; padding: 15px;
         }
-
         .royal-scroll {
-            background: #f4ecd8; 
-            border-left: 15px solid #d4af37; 
-            border-right: 15px solid #d4af37; 
+            background: #f4ecd8; border-left: 15px solid #d4af37; border-right: 15px solid #d4af37; 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(139, 94, 26, 0.3); 
-            padding: 30px 20px;
-            width: 100%; max-width: 500px; max-height: 85vh; 
-            overflow-y: auto; position: relative; color: #2b1d0c; 
-            font-size: 1.05rem; line-height: 1.6; text-align: center;
-            font-family: 'SolaimanLipi', 'Kalpurush', 'Segoe UI', sans-serif;
-            border-radius: 4px;
+            padding: 30px 20px; width: 100%; max-width: 500px; max-height: 85vh; 
+            overflow-y: auto; position: relative; color: #2b1d0c; font-size: 1.05rem; line-height: 1.6;
+            text-align: center; font-family: 'SolaimanLipi', 'Kalpurush', 'Segoe UI', sans-serif; border-radius: 4px;
         }
-
         .royal-scroll::before, .royal-scroll::after {
             content: ""; position: absolute; left: -20px; right: -20px; height: 10px;
             background: linear-gradient(to right, #aa7c11, #d4af37, #aa7c11); border-radius: 10px;
@@ -204,50 +233,59 @@
 
         .wish-text { font-weight: 500; white-space: pre-line; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
         .cursor { display: inline-block; width: 2px; height: 1.2rem; background-color: #2b1d0c; animation: blink 0.8s infinite; vertical-align: middle; margin-left: 2px; }
-        @keyframes blink { 50% { opacity: 0; } }
 
         @media (min-width: 768px) {
             #text-overlay { font-size: 4rem; letter-spacing: 5px; }
             .royal-scroll { font-size: 1.35rem; line-height: 1.8; max-width: 750px; padding: 40px 50px; border-left-width: 25px; border-right-width: 25px; }
             .royal-scroll::before, .royal-scroll::after { left: -30px; right: -30px; height: 15px; }
             .royal-scroll::before { top: -10px; } .royal-scroll::after { bottom: -10px; }
-            .cursor { width: 3px; height: 1.4rem; }
-            .stage { max-width: 500px; scale: 1.3; }
+            .stage { max-width: 600px; scale: 1.25; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Scene 1: Matrix Rain & Rhombus Heart -->
+    <!-- Scene 1: Matrix Code Rain & Rhombus Heart -->
     <div id="scene1">
         <canvas id="matrixCanvas" class="canvas-layer"></canvas>
         <canvas id="particleCanvas" class="canvas-layer"></canvas>
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
-    <!-- Scene 2: Interactive Blowing Candle Scene -->
+    <!-- Scene 2: Real Character Animated Blowing Candle Scene -->
     <div id="scene2">
         <div class="stage">
             <!-- Boy Character -->
             <div class="character boy">
                 <div class="bubble" id="boyBubble">Happy Birthday Juhi! 🎉</div>
-                <div class="head"></div>
-                <div class="body"></div>
-                <div class="hand"></div>
+                <div class="hair"></div>
+                <div class="head">
+                    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                    <div class="mouth" style="border-radius: 50%; height: 6px; width: 10px;"></div>
+                </div>
+                <div class="body">
+                    <div class="arm"></div>
+                </div>
             </div>
 
             <!-- Birthday Cake Area -->
             <div class="cake-container">
                 <div class="candle">
                     <div class="flame" id="candleFlame"></div>
+                    <div class="smoke" id="smokeCloud"></div>
                 </div>
                 <div class="cake"></div>
-                <div class="puff-effect" id="puffText">*Puff!* 💨</div>
             </div>
 
             <!-- Girl Character -->
             <div class="character girl" id="girlChar">
-                <div class="head"></div>
+                <div class="hair"></div>
+                <div class="head">
+                    <div class="hair-front"></div>
+                    <div class="ponytail"></div>
+                    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                    <div class="mouth" id="girlMouth"></div>
+                </div>
                 <div class="body"></div>
             </div>
         </div>
@@ -272,7 +310,7 @@
         }
         resizeCanvases();
 
-        // --- MATRIX CODE RAIN ---
+        // --- MATRIX RAIN ---
         const katakana = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]+-*';
         const alphabet = katakana.split('');
         const fontSize = 14;
@@ -294,7 +332,7 @@
         }
         const matrixInterval = setInterval(drawMatrix, 30);
 
-        // --- RHOMBUS LUV PARTICLES ---
+        // --- RHOMBUS PARTICLES ---
         const particles = [];
         const numParticles = 450; 
         let makeHeart = false;
@@ -364,59 +402,57 @@
         }
         animateParticles();
 
-        // --- PAGES TIMELINE CONTROLLER ---
+        // --- TIMELINE PAGE CONTROLLER ---
         const scene1 = document.getElementById('scene1');
         const scene2 = document.getElementById('scene2');
         const scene3 = document.getElementById('scene3');
         const textOverlay = document.getElementById('text-overlay');
 
-        // Timeline Action 1: Text Disappears, Rhombus Forms Heart
         setTimeout(() => { textOverlay.style.opacity = '0'; makeHeart = true; }, 3500);
 
-        // Timeline Action 2: Transition from Heart Scene to Interaction Scene (Scene 2)
         setTimeout(() => {
             clearInterval(matrixInterval);
             scene1.style.opacity = '0';
             setTimeout(() => {
                 scene1.style.display = 'none';
                 scene2.style.zIndex = '3'; scene2.style.opacity = '1';
-                runBirthdayInteraction(); // Trigger character sequences
+                runRealBirthdayInteraction(); 
             }, 1500);
         }, 7500);
 
-        // --- SCENE 2 INTERACTION TIMELINE ---
-        function runBirthdayInteraction() {
+        // --- SCENE 2: CINEMATIC INTERACTION LAW ---
+        function runRealBirthdayInteraction() {
             const boyBubble = document.getElementById('boyBubble');
             const girlChar = document.getElementById('girlChar');
             const candleFlame = document.getElementById('candleFlame');
-            const puffText = document.getElementById('puffText');
+            const smokeCloud = document.getElementById('smokeCloud');
 
-            // Step A: Boy Waving & Dialog Appears
+            // Step 1: Boy waves hand and wishes
             setTimeout(() => { boyBubble.style.opacity = '1'; }, 1000);
 
-            // Step B: Girl Steps Forward Towards Cake
-            setTimeout(() => { girlChar.style.transform = 'translateX(-30px)'; }, 2800);
+            // Step 2: Girl leans forward and prepares to blow
+            setTimeout(() => { 
+                girlChar.classList.add('lean-forward'); 
+            }, 3000);
 
-            // Step C: Girl Blows Candle (*Puff* displays, flame disappears)
+            // Step 3: Girl blows (*Puff action*), Candle flame turns off & Smoke triggers
             setTimeout(() => {
-                puffText.style.opacity = '1';
-                puffText.style.transform = 'scale(1.2)';
-                puffText.style.transition = 'all 0.3s ease';
-                candleFlame.style.display = 'none'; // Candle Extinguished!
-            }, 4300);
+                candleFlame.style.display = 'none'; // Put out fire
+                smokeCloud.classList.add('active'); // Start realistic smoke drift
+            }, 4400);
 
-            // Step D: Transition onto Final Royal Scroll Scene
+            // Step 4: Shift to final Royal scroll text panel
             setTimeout(() => {
                 scene2.style.opacity = '0';
                 setTimeout(() => {
                     scene2.style.display = 'none';
                     scene3.style.zIndex = '3'; scene3.style.opacity = '1';
-                    setTimeout(startTyping, 1000); // Trigger letter typing
+                    setTimeout(startTyping, 1000);
                 }, 1500);
-            }, 6500);
+            }, 6800);
         }
 
-        // --- SCENE 3 TYPEWRITER LOGIC ---
+        // --- SCENE 3: TEXT GENERATOR ---
         const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
 কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
@@ -442,7 +478,6 @@
             type();
         }
 
-        // Resize handler support
         window.addEventListener('resize', () => {
             resizeCanvases();
             columns = mCanvas.width / fontSize;
