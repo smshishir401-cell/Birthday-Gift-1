@@ -18,7 +18,6 @@
             font-family: 'Courier New', Courier, monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Scene 1: Code Rain & Particle Text */
         #scene1 {
             position: absolute;
             width: 100%;
@@ -38,7 +37,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #ff69b4; /* Pink */
+            color: #ff69b4; 
             font-size: 4rem;
             font-weight: bold;
             text-align: center;
@@ -54,7 +53,6 @@
             100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
         }
 
-        /* Scene 2: Black Page & Royal King's Scroll Paper */
         #scene2 {
             position: absolute;
             width: 100%;
@@ -69,20 +67,19 @@
             padding: 20px;
         }
 
-        /* Royal Vintage Scroll Design (রাজা-বাদশাহদের পত্রের মতো ডিজাইন) */
         .royal-scroll {
-            background: #f4ecd8; /* Vintage parchment paper color */
-            border-left: 25px solid #d4af37; /* Royal Golden Scroll Roll Left */
-            border-right: 25px solid #d4af37; /* Royal Golden Scroll Roll Right */
+            background: #f4ecd8; 
+            border-left: 25px solid #d4af37; 
+            border-right: 25px solid #d4af37; 
             box-shadow: 
                 0 0 30px rgba(0, 0, 0, 0.7), 
-                inset 0 0 40px rgba(139, 94, 26, 0.3); /* Aged paper effect */
+                inset 0 0 40px rgba(139, 94, 26, 0.3); 
             padding: 40px 50px;
             max-width: 750px;
             width: 100%;
             min-height: 450px;
             position: relative;
-            color: #2b1d0c; /* Deep vintage brown text for high contract and readability */
+            color: #2b1d0c; 
             font-size: 1.35rem;
             line-height: 1.8;
             text-align: center;
@@ -90,7 +87,6 @@
             border-radius: 4px;
         }
 
-        /* Top and Bottom Scroll Wooden/Gold Bar Ends (রাজকীয় পত্রের দুই পাশের লাঠি বা রোল ডিজাইন) */
         .royal-scroll::before {
             content: "";
             position: absolute;
@@ -117,7 +113,6 @@
             text-shadow: 0px 1px 1px rgba(255,255,255,0.5);
         }
 
-        /* Vintage Cursor Effect */
         .cursor {
             display: inline-block;
             width: 3px;
@@ -134,13 +129,11 @@
 </head>
 <body>
 
-    <!-- Scene 1: Code Rain & Juhi Text -->
     <div id="scene1">
         <canvas id="matrixCanvas"></canvas>
         <div id="text-overlay">HAPPY BIRTHDAY JUHI</div>
     </div>
 
-    <!-- Scene 2: Royal Scroll Paper on Black Screen (No Logos) -->
     <div id="scene2">
         <div class="royal-scroll">
             <span class="wish-text" id="typewriter"></span><span class="cursor" id="cursor"></span>
@@ -148,7 +141,6 @@
     </div>
 
     <script>
-        // --- MATRIX CODE RAIN ---
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -187,7 +179,6 @@
 
         const matrixInterval = setInterval(drawMatrix, 30);
 
-        // --- TRANSITION & TYPEWRITER EFFECT ---
         const message = `১৫তম জন্মদিনের শুভেচ্ছা, জুহি! 🎉✨ 
 
 কৈশোরের এই দারুণ সময়ে তোমাকে স্বাগতম! আমি আশা করি এই বছরটি তোমার জীবনে বয়ে আনবে অফুরন্ত হাসি, চমৎকার সব স্মৃতি আর তোমার স্বপ্ন দেখা সব কিছু। তোমার দিনটি যেন তোমার মতোই উজ্জ্বল এবং সুন্দর হয়।
@@ -201,7 +192,6 @@
         const typewriterElement = document.getElementById('typewriter');
         const cursor = document.getElementById('cursor');
 
-        // প্রথম সিন ৬ সেকেন্ড থাকবে, তারপর দ্বিতীয় সিন রাজকীয় পত্র নিয়ে আসবে
         setTimeout(() => {
             clearInterval(matrixInterval);
             scene1.style.opacity = '0';
@@ -211,7 +201,6 @@
                 scene2.style.zIndex = '2';
                 scene2.style.opacity = '1';
                 
-                // টাইপরাইটার ইফেক্ট শুরু
                 setTimeout(startTyping, 1000);
             }, 2000);
         }, 6000);
@@ -222,15 +211,14 @@
                 if (index < message.length) {
                     typewriterElement.textContent += message.charAt(index);
                     index++;
-                    setTimeout(type, 50); // টাইপিং স্পিড
+                    setTimeout(type, 50); 
                 } else {
-                    cursor.style.display = 'none'; // টাইপিং শেষে কার্সার হাইড হবে
+                    cursor.style.display = 'none'; 
                 }
             }
             type();
         }
 
-        // Window resize handle
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
